@@ -1,16 +1,18 @@
-import { BrowserRouter,Routes, Route } from 'react-router-dom' 
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Sidebar from './Components/Sidebar';
 import Home from './Components/Home';
 import useToken from './Services/UserService';
 import Login from './Components/Login';
-import UserList from './Components/UserManagement/UserList';
 import Notificacion from './Components/Notification';
 import { toast, ToastContainer } from 'react-toastify';
-import { ultimaNotificacion } from './Services/UserService';
 import { useEffect, useState } from "react";
-import { HubConnection, HubConnectionBuilder } from "@microsoft/signalr";
+import { HubConnectionBuilder } from "@microsoft/signalr";
 import ControlUser from './Components/UserManagement/ControlUser';
-
+import NoEncontrada from './Components/NoEncontrada';
+import UserList from './Components/UserManagement/UserList';
+import BlockUser from './Components/UserManagement/BlockUser';
+import RegisterUser from './Components/UserManagement/RegisterUser';
+import UserDetail from './Components/UserManagement/UserDetail';
 
 function App() {
   const { token, setToken } = useToken();
@@ -21,7 +23,6 @@ function App() {
       .withUrl("https://localhost:7125/hubs/notifications")
       .withAutomaticReconnect()
       .build();
-
     setConnection(connect);
   }, []);
 
@@ -30,7 +31,7 @@ function App() {
       connection
         .start()
         .then(() => {
-          connection.on("ReceiveMessage", (message) => {                                
+          connection.on("ReceiveMessage", (message) => {
             toast.success(`Nueva notificacion recibida: ${message}`);
             console.log(message);
           });
@@ -38,43 +39,31 @@ function App() {
         .catch((error) => console.log(error));
     }
   }, [connection]);
-  
-  if(!token) {
+
+  if (!token) {
     return <Login setToken={setToken} />
   }
 
-  // setInterval(() => {
-  // ultimaNotificacion().then(function(result) {
-  //   if (lastResult !== null && JSON.stringify(lastResult) === JSON.stringify(result)) {
-  //     console.log("Sin cambios")
-  //   }
-  //   else {
-  //     setMessage(result);
-  //     Mensaje();
-  //   }
-  //   lastResult = result;
-  //   });
-  // }, 10000);
-  
-  // function Mensaje(){
-  //   var notificacion = <div><div>{message.fecha}</div><div>{message.mensaje}</div> </div> 
-  //   return toast({notificacion});     
-  // }
-  
-
   return (
     <div class="flex">
-      <Sidebar/>
+      <aside class="h-screen sticky top-0">
+      <Sidebar />
+    </aside>      
       <BrowserRouter>
-        <Routes>        
-        <Route path="/" element={<Home/>} />  
-        <Route path="/controlUser" element={<ControlUser />}>
-                   
-        </Route>
-        <Route path="/notificaciones" element={<Notificacion/>} />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/controlUser" element={<ControlUser />}>
+            <Route index element={<UserList />} />
+            <Route path="/controlUser/useList" element={<UserList />} />
+            <Route path="/controlUser/blockUser" element={<BlockUser />} />
+            <Route path="/controlUser/registerUser" element={<RegisterUser />} />
+            <Route path="/controlUser/userDetail/:id" element={<UserDetail />} />
+          </Route>
+          <Route path="/notificaciones" element={<Notificacion />} />
+          <Route path="*" element={<NoEncontrada />} />
         </Routes>
       </BrowserRouter>
-      <ToastContainer/>
+      <ToastContainer />
     </div>
   );
 }

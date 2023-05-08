@@ -5,6 +5,7 @@
   "dependencies": {
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
+    "@headlessui/react": "^1.7.14",
     "@microsoft/signalr": "^7.0.5",
     "@mui/icons-material": "^5.11.16",
     "@testing-library/jest-dom": "^5.16.5",
@@ -14,6 +15,7 @@
     "browser": "^0.2.6",
     "buffer": "^6.0.3",
     "eventsource": "^2.0.2",
+    "html-loader": "^4.2.0",
     "http": "^0.0.1-security",
     "https": "^1.0.0",
     "https-browserify": "^1.0.0",
@@ -26,6 +28,7 @@
     "react-toastify": "^9.0.3",
     "stream-http": "^3.2.0",
     "url": "^0.11.0",
+    "url-loader": "^4.1.1",
     "util": "^0.12.5",
     "web-vitals": "^2.1.4",
     "websocket": "^1.0.34"
@@ -63,6 +66,7 @@
     "babel-loader": "^9.1.2",
     "babel-plugin-react-html-attrs": "^3.0.5",
     "css-loader": "^6.7.3",
+    "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.5.1",
     "postcss": "^8.4.23",
     "sass": "^1.62.0",

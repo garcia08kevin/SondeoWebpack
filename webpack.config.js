@@ -28,6 +28,17 @@ module.exports = {
   module: {
     // exclude node_modules
     rules: [
+      {        
+        test: /\.html$/,
+        loader: 'html-loader'
+      },
+      {
+        test: /\.(jpg|png|svg)$/i,
+        loader: 'url-loader',
+        options: {
+          outputPath: 'images',
+        }
+      },
       {
         test: /\.js$/,
         enforce: 'pre',
@@ -46,8 +57,8 @@ module.exports = {
   },
   // pass all js files through Babel
   resolve: {
-    extensions: [".*",".js",".jsx",".scss",".css"],    // <-- added `.jsx` here  
-    fallback: { 
+    extensions: [".*", ".js", ".jsx", ".scss", ".css"],    // <-- added `.jsx` here  
+    fallback: {
       "http": require.resolve("stream-http"),
       "buffer": require.resolve("buffer/"),
       "https": require.resolve("https-browserify")

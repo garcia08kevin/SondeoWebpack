@@ -5,35 +5,11 @@ import { HubConnection, HubConnectionBuilder } from "@microsoft/signalr";
 
 function Sidebar() {
     let [nNotificaciones, setNotificaciones] = useState();
-    const [connection, setConnection] = useState(null);
+    
     const logout = async() => {
         await localStorage.clear();
         window.location.reload()
     }
-    
-    useEffect(() => {
-      const connect = new HubConnectionBuilder()
-        .withUrl("https://localhost:7125/hubs/notifications")
-        .withAutomaticReconnect()
-        .build();
-  
-      setConnection(connect);
-    }, []);
-
-  
-    useEffect(() => {
-      if (connection) {
-        connection
-          .start()
-          .then(() => {
-            connection.on("nroNotificaciones", (message) => {                                
-              setNotificaciones(message)
-              console.log(message);
-            });
-          })
-          .catch((error) => console.log(error));
-      }
-    }, [connection]);
 
     return (
         <div class="min-h-screen flex flex-row bg-gray-100">
@@ -57,19 +33,7 @@ function Sidebar() {
             <li>
               <a href="#" class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
                 <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i class="bx bx-drink"></i></span>
-                <span class="text-sm font-medium">Drink</span>
-              </a>
-            </li>
-            <li>
-              <a href="#" class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
-                <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i class="bx bx-shopping-bag"></i></span>
-                <span class="text-sm font-medium">Shopping</span>
-              </a>
-            </li>
-            <li>
-              <a href="#" class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
-                <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i class="bx bx-chat"></i></span>
-                <span class="text-sm font-medium">Chat</span>
+                <span class="text-sm font-medium">Control Productos</span>
               </a>
             </li>
             <li>

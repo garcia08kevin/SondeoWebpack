@@ -39,7 +39,7 @@ function Notificacion() {
   }
 
     return (
-      <div class="shadow-2xl flex flex-col m-5">
+      <div class="shadow-2xl grow flex flex-col m-5">
         <div class="flex items-center justify-center h-10 shadow-md">
             <h1 class="text-2xl text-center  text-indigo-500">Notificaciones</h1>
             <button onClick={notificaciones} class="flex m-6 bg-white top-0 right-0 hover:bg-gray-100 text-gray-800 font-semibold py-0.5 px-3 border border-gray-400 rounded shadow">
