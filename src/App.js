@@ -10,7 +10,6 @@ import { HubConnectionBuilder } from "@microsoft/signalr";
 import ControlUser from './Components/UserManagement/ControlUser';
 import NoEncontrada from './Components/NoEncontrada';
 import UserList from './Components/UserManagement/UserList';
-import BlockUser from './Components/UserManagement/BlockUser';
 import RegisterUser from './Components/UserManagement/RegisterUser';
 import UserDetail from './Components/UserManagement/UserDetail';
 
@@ -55,7 +54,6 @@ function App() {
           <Route path="/controlUser" element={<ControlUser />}>
             <Route index element={<UserList />} />
             <Route path="/controlUser/useList" element={<UserList />} />
-            <Route path="/controlUser/blockUser" element={<BlockUser />} />
             <Route path="/controlUser/registerUser" element={<RegisterUser />} />
             <Route path="/controlUser/userDetail/:id" element={<UserDetail />} />
           </Route>

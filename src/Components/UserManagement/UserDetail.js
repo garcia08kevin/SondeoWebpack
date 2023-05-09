@@ -2,13 +2,12 @@ import { Route, useParams, Link } from "react-router-dom"
 import images from '../../../public/icons/usuario.png'
 import { DeleteUser, UserDetailById, UserActivation} from "../../Services/UserService";
 import { useEffect, useState } from "react";
-
+import { toast, ToastContainer } from 'react-toastify';
 
 function UserDetail() {
   const [apiCalled, setApiCalled] = useState(false);
   const [userData, setUserData] = useState([]);
   const [activado, setActivado] = useState(false);
-  const [mensaje, setMensaje] = useState();
   const [showModal, setShowModal] = useState(false);
   const { id } = useParams()
 
@@ -31,8 +30,9 @@ function UserDetail() {
 
   function activarUsuario(){    
     UserActivation(userData.email,activado).then(response => {      
-      setMensaje(true);
-      console.log(response);
+      if(response){        
+        toast.success(`Se ha cambiado el estado del usuario completamente`);        
+      }
     });
   }
 
@@ -44,12 +44,27 @@ function UserDetail() {
   }
 
   return (
-    <>
-      <div class="shadow-2xl flex flex-row m-8">
-        <section class="m-6">
-          <div class="flex flex-col bg-white w-full  shadow-xl">
-            <div class="px-6">
-              <div class="flex justify-center  mt-6">
+    <div class="shadow-2xl px-5 m-5">
+      <nav class="flex  mt-2" aria-label="Breadcrumb">
+  <ol class="inline-flex items-center space-x-1 md:space-x-3">
+    <li class="inline-flex items-center">
+      <a href="/controlUser" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
+        <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
+        Lista Usuario
+      </a>
+    </li>
+    <li aria-current="page">
+      <div class="flex items-center">
+        <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
+        <span class="ml-1 text-sm font-medium text-gray-500 md:ml-2 dark:text-gray-400">Detalle Usuario</span>
+      </div>
+    </li>
+  </ol>
+</nav>
+      <div class="flex flex-row justify-evenly">    
+      <div class="m-5  text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400">
+            <div class="m-5 ">
+              <div class="flex justify-center  m-6">
                 <img class="rounded-full w-40 h-40" src={images} />
               </div>
               <div class="text-center mt-12">
@@ -71,9 +86,9 @@ function UserDetail() {
               </div>
             </div>
           </div>
-        </section>
-        <section class="self-center">
-          <div class="flex flex-col bg-white w-full items-center  m-6 shadow-xl">
+
+
+          <div class="flex flex-col items-center justify-center">
             <h3 class="mb-4 text-xl text-center font-semibold leading-normal text-blueGray-700 m-4">
               Opciones
             </h3>
@@ -88,15 +103,9 @@ function UserDetail() {
               <div className="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
               <span className="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">{activado ? "Usuario Activado" : "Usuario desactivado"}</span>
             </label>
-
+            <Link to={`/controlUser`}>
             <button onClick={()=> activarUsuario()} type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">Aplicar cambios</button>
-
-            {mensaje ? (
-                            <div class="p-4 m-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400" role="alert">
-                                Se ha cambiado el estado del usuario exitosamente
-                            </div>
-                        ) :null}
-
+            </Link>
             <button type="button" onClick={() => setShowModal(true)} class="m-3 text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Eliminar Usuario</button>
             {showModal ? (
               <>
@@ -128,15 +137,9 @@ function UserDetail() {
                 <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
               </>
             ) : null}
-
-
-
-
-
           </div>
-        </section>
       </div>
-    </>
+    </div>
   );
 }
 
