@@ -12,6 +12,10 @@ import NoEncontrada from './Components/NoEncontrada';
 import UserList from './Components/UserManagement/UserList';
 import RegisterUser from './Components/UserManagement/RegisterUser';
 import UserDetail from './Components/UserManagement/UserDetail';
+import ControlProduct from './Components/ProductsManagement/ControlProduct';
+import PoductList from './Components/ProductsManagement/ProductList';
+import CreateProduct from './Components/ProductsManagement/CreateProduct'
+import ProductDetail from './Components/ProductsManagement/ProductDetail';
 
 function App() {
   const { token, setToken } = useToken();
@@ -56,6 +60,12 @@ function App() {
             <Route path="/controlUser/useList" element={<UserList />} />
             <Route path="/controlUser/registerUser" element={<RegisterUser />} />
             <Route path="/controlUser/userDetail/:id" element={<UserDetail />} />
+          </Route>
+          <Route path="/controlProduct" element={<ControlProduct />}>
+            <Route index element={<PoductList />} />
+            <Route path="/controlProduct/poductList" element={<PoductList />} />
+            <Route path="/controlProduct/creteProduct" element={<CreateProduct />} />
+            <Route path="/controlProduct/productDetail/:id" element={<ProductDetail />} />
           </Route>
           <Route path="/notificaciones" element={<Notificacion />} />
           <Route path="*" element={<NoEncontrada />} />
