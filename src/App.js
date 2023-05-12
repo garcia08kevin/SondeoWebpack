@@ -48,30 +48,30 @@ function App() {
   }
 
   return (
-    <div class="flex">
-      <aside class="h-screen sticky top-0">
+    <div class="">
       <Sidebar />
-    </aside>      
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/controlUser" element={<ControlUser />}>
-            <Route index element={<UserList />} />
-            <Route path="/controlUser/useList" element={<UserList />} />
-            <Route path="/controlUser/registerUser" element={<RegisterUser />} />
-            <Route path="/controlUser/userDetail/:id" element={<UserDetail />} />
-          </Route>
-          <Route path="/controlProduct" element={<ControlProduct />}>
-            <Route index element={<PoductList />} />
-            <Route path="/controlProduct/poductList" element={<PoductList />} />
-            <Route path="/controlProduct/creteProduct" element={<CreateProduct />} />
-            <Route path="/controlProduct/productDetail/:id" element={<ProductDetail />} />
-          </Route>
-          <Route path="/notificaciones" element={<Notificacion />} />
-          <Route path="*" element={<NoEncontrada />} />
-        </Routes>
-      </BrowserRouter>
-      <ToastContainer />
+      <div class="p-4 sm:ml-64">
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/controlUser" element={<ControlUser />}>
+              <Route index element={<UserList />} />
+              <Route path="/controlUser/useList" element={<UserList />} />
+              <Route path="/controlUser/registerUser" element={<RegisterUser />} />
+              <Route path="/controlUser/userDetail/:id" element={<UserDetail />} />
+            </Route>
+            <Route path="/controlProduct" element={<ControlProduct />}>
+              <Route index element={<PoductList />} />
+              <Route path="/controlProduct/poductList" element={<PoductList />} />
+              <Route path="/controlProduct/creteProduct" element={<CreateProduct />} />
+              <Route path="/controlProduct/productDetail/:id" element={<ProductDetail />} />
+            </Route>
+            <Route path="/notificaciones" element={<Notificacion />} />
+            <Route path="*" element={<NoEncontrada />} />
+          </Routes>
+        </BrowserRouter>
+        <ToastContainer />
+      </div>
     </div>
   );
 }

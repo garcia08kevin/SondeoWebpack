@@ -17,14 +17,14 @@ function UserList() {
   function handlePageClick(event, pageNumber) {
     event.preventDefault();
     setCurrentPage(pageNumber);
-}
+  }
 
-const totalPages = Math.ceil(users.length / itemsPerPage);
+  const totalPages = Math.ceil(users.length / itemsPerPage);
 
-const pageNumbers = [];
-for (let i = 1; i <= totalPages; i++) {
+  const pageNumbers = [];
+  for (let i = 1; i <= totalPages; i++) {
     pageNumbers.push(i);
-}
+  }
 
   useEffect(() => {
     if (!apiCalled) {
@@ -36,7 +36,7 @@ for (let i = 1; i <= totalPages; i++) {
   }, [apiCalled]);
 
   return (
-    <div class="shadow-2xl rounded-lg  flex flex-col m-5">
+    <div>
       <h2 class="m-4 text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-4xl dark:text-white">Lista de Usuarios</h2>
 
       <div class="grid grid-cols-7">
@@ -136,23 +136,23 @@ for (let i = 1; i <= totalPages; i++) {
         ) : null}
       </div>
       <nav class=" flex m-3 justify-center">
-                <ul className="inline-flex items-center -space-x-px">
-                    {pageNumbers.map((pageNumber) => (
-                        <li key={pageNumber}>
-                            <a
-                                href="#"
-                                className={`block px-3 py-2 leading-tight ${currentPage === pageNumber
-                                        ? "text-white bg-indigo-500"
-                                        : "text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-                                    }`}
-                                onClick={(event) => handlePageClick(event, pageNumber)}
-                            >
-                                {pageNumber}
-                            </a>
-                        </li>
-                    ))}
-                </ul>
-            </nav>
+        <ul className="inline-flex items-center -space-x-px">
+          {pageNumbers.map((pageNumber) => (
+            <li key={pageNumber}>
+              <a
+                href="#"
+                className={`block px-3 py-2 leading-tight ${currentPage === pageNumber
+                  ? "text-white bg-indigo-500"
+                  : "text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                  }`}
+                onClick={(event) => handlePageClick(event, pageNumber)}
+              >
+                {pageNumber}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
     </div>
   );
 }

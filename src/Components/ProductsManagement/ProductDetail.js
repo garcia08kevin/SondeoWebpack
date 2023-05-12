@@ -41,14 +41,14 @@ function ProductDetail() {
 
     function activarProducto() {
         ProductActivation(id).then(response => {
-          if (response) {            
-            toast.success('Se ha cambiado el estado del producto correctamente');
-          }
+            if (response.result) {
+                toast.success(response.contenido);
+            }
         });
-      }
+    }
 
     return (
-        <div class="shadow-2xl px-5 m-5">
+        <div>
             <nav class="flex  mt-2" aria-label="Breadcrumb">
                 <ol class="inline-flex items-center space-x-1 md:space-x-3">
                     <li class="inline-flex items-center">
@@ -66,7 +66,7 @@ function ProductDetail() {
                 </ol>
             </nav>
             <section class="text-gray-700 body-font overflow-hidden bg-white">
-                <div class="container py-24 mx-auto">
+                <div class="container py-10 mx-auto">
                     <div class="lg:w-4/5 mx-auto flex flex-wrap">
                         <img alt="ecommerce" class="lg:w-1/2 w-full object-cover object-center rounded border border-gray-200" src="https://www.whitmorerarebooks.com/pictures/medium/2465.jpg" />
                         <div class="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">

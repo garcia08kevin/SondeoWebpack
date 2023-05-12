@@ -43,7 +43,7 @@ function UserDetail() {
   }
 
   return (
-    <div class="shadow-2xl px-5 m-5">
+    <div>
       <nav class="flex  mt-2" aria-label="Breadcrumb">
         <ol class="inline-flex items-center space-x-1 md:space-x-3">
           <li class="inline-flex items-center">

@@ -1,7 +1,8 @@
-    import { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom"
 import { getProducts, getCategorias } from "../../Services/ProductService";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import CreateProduct from "./CreateProduct";
 
 function PoductList() {
     const [products, setProducts] = useState([]);
@@ -37,17 +38,17 @@ function PoductList() {
     function handlePageClick(event, pageNumber) {
         event.preventDefault();
         setCurrentPage(pageNumber);
-      }
+    }
 
-      const totalPages = Math.ceil(products.length / itemsPerPage);
+    const totalPages = Math.ceil(products.length / itemsPerPage);
 
-      const pageNumbers = [];
-      for (let i = 1; i <= totalPages; i++) {
+    const pageNumbers = [];
+    for (let i = 1; i <= totalPages; i++) {
         pageNumbers.push(i);
-      }
+    }
 
     return (
-        <div class="shadow-2xl rounded-lg  flex flex-col m-5">
+        <div>
             <h2 class="m-4 text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-4xl dark:text-white">Lista de Productos</h2>
             <div class="grid grid-cols-7">
                 <form class="col-span-6">
@@ -99,45 +100,45 @@ function PoductList() {
                     <tbody>
                         {products.filter((product) => product.nombre.toLowerCase().includes(searchQuery.toLowerCase()) &&
                             ((filtroCategoria === '' || filtroCategoria === 'Categoria') ? true : (product.categoria.nombreCategoria === filtroCategoria)) &&
-                            (filtroEstado === '' || filtroEstado === 'Estado' ? true : (product.activado.toString() === filtroEstado))                            
+                            (filtroEstado === '' || filtroEstado === 'Estado' ? true : (product.activado.toString() === filtroEstado))
                         ).slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
-                        .map((val, key) => {
-                            return (
-                                <tr key={val.id} class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                    <td class="px-6 py-4">
-                                        {val.categoria.nombreCategoria}
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        {val.marca.nombreMarca}
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        {val.propiedades.nombrePropiedades}
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        {val.nombre}
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        {val.activado == true ? <div class=" p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50">
-                                            <div>
-                                                <span class="font-medium text-center ">Activado</span>
-                                            </div>
-                                        </div> :
-                                            <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400">
+                            .map((val, key) => {
+                                return (
+                                    <tr key={val.id} class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                        <td class="px-6 py-4">
+                                            {val.categoria.nombreCategoria}
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            {val.marca.nombreMarca}
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            {val.propiedades.nombrePropiedades}
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            {val.nombre}
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            {val.activado == true ? <div class=" p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50">
                                                 <div>
-                                                    <span class="font-medium text-center ">No Activado</span>
+                                                    <span class="font-medium text-center ">Activado</span>
                                                 </div>
-                                            </div>}
-                                    </td>
-                                    <td class="px-6 py-4">
-                                        <Link to={`/controlProduct/productDetail/${val.id}`}>
-                                            <button type="button" class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-full text-sm px-2 py-2  dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
-                                                <MoreVertIcon />
-                                            </button>
-                                        </Link>
-                                    </td>
-                                </tr>
-                            )
-                        })}
+                                            </div> :
+                                                <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400">
+                                                    <div>
+                                                        <span class="font-medium text-center ">No Activado</span>
+                                                    </div>
+                                                </div>}
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            <Link to={`/controlProduct/productDetail/${val.id}`}>
+                                                <button type="button" class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-full text-sm px-2 py-2  dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
+                                                    <MoreVertIcon />
+                                                </button>
+                                            </Link>
+                                        </td>
+                                    </tr>
+                                )
+                            })}
                     </tbody>
                 </table>
                 {showModal ? (
@@ -153,7 +154,7 @@ function PoductList() {
                                             <span class="sr-only">Close modal</span>
                                         </button>
                                         <div class="p-5 text-center">
-
+                                            <CreateProduct />
 
                                             <button onClick={() => setShowModal(false)} data-modal-hide="popup-modal" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">Cancelar</button>
                                         </div>
@@ -167,22 +168,21 @@ function PoductList() {
             </div>
             <nav class=" flex m-3 justify-center">
                 <ul className="inline-flex items-center -space-x-px">
-  {pageNumbers.map((pageNumber) => (
-    <li key={pageNumber}>
-      <a
-        href="#"
-        className={`block px-3 py-2 leading-tight ${
-          currentPage === pageNumber
-            ? "text-white bg-indigo-500"
-            : "text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
-        }`}
-        onClick={(event) => handlePageClick(event, pageNumber)}
-      >
-        {pageNumber}
-      </a>
-    </li>
-  ))}
-</ul>
+                    {pageNumbers.map((pageNumber) => (
+                        <li key={pageNumber}>
+                            <a
+                                href="#"
+                                className={`block px-3 py-2 leading-tight ${currentPage === pageNumber
+                                    ? "text-white bg-indigo-500"
+                                    : "text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                                    }`}
+                                onClick={(event) => handlePageClick(event, pageNumber)}
+                            >
+                                {pageNumber}
+                            </a>
+                        </li>
+                    ))}
+                </ul>
             </nav>
         </div>
     )

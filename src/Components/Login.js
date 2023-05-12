@@ -16,7 +16,7 @@ export default function Login({ setToken }) {
       email,
       password
     });
-    
+
     if (!token.result) {
       var mensaje = token.errors[0];
       setMessage(mensaje);

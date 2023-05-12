@@ -22,10 +22,10 @@ export const getProductsById = async (id) => {
     return response.json();
 }
 
-export const ProductActivation = async (id) => {  
+export const ProductActivation = async (id) => {
     const response = await fetch(`https://localhost:7125/api/Admin/ActivarProducto?id=${id}`, {
         method: 'POST',
-        headers: {'Content-Type': 'application/json'}
-      })    
-      return response.json();
-  }
+        headers: { 'Content-Type': 'application/json' }
+    })
+    return response.json();
+}
