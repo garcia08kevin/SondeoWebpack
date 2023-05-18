@@ -24,7 +24,6 @@ function UserDetail() {
 
   function handleToggle() {
     setActivado(!activado);
-    console.log('isEnabled:', !activado);
   }
 
   function activarUsuario() {

@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import axios from 'axios'
 
 export default function useToken() {
   const getToken = () => {
@@ -14,7 +13,6 @@ export default function useToken() {
     localStorage.setItem('token', JSON.stringify(userToken));
     setToken(userToken.token);
   };
-
   return {
     setToken: saveToken,
     token
@@ -32,11 +30,11 @@ export async function loginUser(credentials) {
     .then(data => data.json())
 }
 
-export async function UserDetail(email) {
-  const response = await fetch(`https://localhost:7125/api/Authentication/UserDetail?email=${email}`, {
+export async function CurrentUser(login) {
+  const response = await fetch(`https://localhost:7125/api/Authentication/CurrentUser`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(email)
+    body: JSON.stringify(login)
   })
   return await response.json();
 }
@@ -50,18 +48,17 @@ export async function UserDetailById(id) {
   return await response.json();
 }
 
-export async function DeleteUser(id) {
-  const response = await fetch(`https://localhost:7125/api/Admin/RemoveUser?id=${id}`, {
-    method: 'DELETE',
+export async function GetAllUserByRole(role) {
+  const response = await fetch(`https://localhost:7125/api/Admin/GetAllUserByRole?role=${role}`, {
+    method: 'GET',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(id)
   })
   return await response.json();
 }
 
-export const notificacionService = async () => {
-  const response = await fetch(`https://localhost:7125/api/Notifications`, {
-    method: 'GET',
+export const UserActivation = async (email, eleccion) => {
+  const response = await fetch(`https://localhost:7125/api/Admin/ActivarUsuario?email=${email}&eleccion=${eleccion}`, {
+    method: 'POST',
     headers: { 'Content-Type': 'application/json' }
   })
   const data = await response.json();
@@ -79,16 +76,6 @@ export async function createUser(user) {
     .then(data => data.json())
 }
 
-export const UserActivation = async (email, eleccion) => {
-  const response = await fetch(`https://localhost:7125/api/Admin/ActivarUsuario?email=${email}&eleccion=${eleccion}`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' }
-  })
-  const data = await response.json();
-  return data;
-}
-
-
 export const getUsers = async () => {
   const response = await fetch(`https://localhost:7125/api/Admin/GetAllUsers`, {
     method: 'GET',
@@ -98,8 +85,17 @@ export const getUsers = async () => {
   return data;
 }
 
+export async function DeleteUser(id) {
+  const response = await fetch(`https://localhost:7125/api/Admin/RemoveUser?id=${id}`, {
+    method: 'DELETE',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(id)
+  })
+  return await response.json();
+}
+
 export const getRoles = async () => {
-  const response = await fetch(`https://localhost:7125/api/Admin/GetAllRoles`, {
+  const response = await fetch(`https://localhost:7125/api/Roles/GetAllRoles`, {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' }
   })
@@ -108,7 +104,16 @@ export const getRoles = async () => {
 }
 
 export const getUserRol = async (id) => {
-  const response = await fetch(`https://localhost:7125/api/Admin/GetUserRole?id=${id}`, {
+  const response = await fetch(`https://localhost:7125/api/Roles/GetUserRole?id=${id}`, {
+    method: 'GET',
+    headers: { 'Content-Type': 'application/json' }
+  })
+  const data = await response.json();
+  return data;
+}
+
+export const notificacionService = async () => {
+  const response = await fetch(`https://localhost:7125/api/Notifications`, {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' }
   })

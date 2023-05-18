@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { notificacionService, marcarComoLeida } from "../Services/UserService";
 import TaskAltIcon from '@mui/icons-material/TaskAlt';
@@ -59,7 +60,7 @@ function Notificacion() {
           <tbody>
             {notificacion.map((val, key) => {
               return (
-                <tr key={val.id} class={val.vista == false ? "bg-white border-b dark:bg-gray-800 font-bold dark:border-gray-700" : "group/item hover:bg-slate-100 bg-white border-b dark:bg-gray-800 dark:border-gray-700"}>
+                <tr key={val.id} class={val.vista == false ? "group/item hover:bg-slate-100 bg-white border-b dark:bg-gray-800 dark:border-gray-700" : "group/item hover:bg-slate-100 bg-white border-b dark:bg-gray-800 dark:border-gray-700"}>
                   {val.tipo == 1 ? <td class="group/item hover:bg-slate-100 w-full p-3 mt-1 rounded flex">
                     <div tabindex="0" aria-label="post icon" role="img" class="focus:outline-none w-8 h-8 border rounded-full border-gray-200 flex items-center justify-center">
                       <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -91,9 +92,16 @@ function Notificacion() {
                     </button>
                   </td>}
                   <td class="px-6 pt-2">
-                    <button type="button" class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-full text-sm px-3 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
+                  {val.tipo ==1 ? <Link to={`/controlUser/userDetail/${val.identificacion}`}>
+                  <button type="button" class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-full text-sm px-3 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
                       <TaskAltIcon />
                     </button>
+                    </Link> : <Link to={`/controlProduct/productDetail/${val.identificacion}`}>
+                  <button type="button" class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-full text-sm px-3 py-2.5 mr-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
+                      <TaskAltIcon />
+                    </button>
+                    </Link>}
+                    
                   </td>
                 </tr>
               )

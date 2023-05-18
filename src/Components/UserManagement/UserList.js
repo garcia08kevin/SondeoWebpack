@@ -87,16 +87,11 @@ function UserList() {
                     {val.email}
                   </td>
                   <td class="px-6 py-4">
-                    {val.cuentaActiva == true ? <div class=" p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50">
-                      <div>
-                        <span class="font-medium text-center ">Activado</span>
-                      </div>
-                    </div> :
-                      <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400">
-                        <div>
-                          <span class="font-medium text-center ">No Activado</span>
-                        </div>
-                      </div>}
+                    {val.cuentaActiva == true ? <div class="flex items-center">
+                        <div class="h-2.5 w-2.5 rounded-full bg-green-500 mr-2"></div> Activado
+                    </div>: <div class="flex items-center">
+                         <div class="h-2.5 w-2.5 rounded-full bg-red-500 mr-2"></div> Desactivado
+                     </div>}
                   </td>
                   <td class="px-6 py-4">
                     <Link to={`/controlUser/userDetail/${val.id}`}>
