@@ -65,6 +65,15 @@ export const UserActivation = async (email, eleccion) => {
   return data;
 }
 
+export const ResetPassword = async (id) => {
+  const response = await fetch(`https://localhost:7125/api/Admin/ResetPassword?userId=${id}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' }
+  })
+  const data = await response.json();
+  return data;
+}
+
 export async function createUser(user) {
   return fetch('https://localhost:7125/api/Admin/Registro', {
     method: 'POST',

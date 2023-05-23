@@ -1,6 +1,6 @@
 import { Route, useParams, Link } from "react-router-dom"
 import images from '../../../public/icons/usuario.png'
-import { DeleteUser, UserDetailById, UserActivation } from "../../Services/UserService";
+import { DeleteUser, UserDetailById, UserActivation, ResetPassword } from "../../Services/UserService";
 import { useEffect, useState } from "react";
 import { toast } from 'react-toastify';
 
@@ -9,6 +9,9 @@ function UserDetail() {
   const [userData, setUserData] = useState([]);
   const [activado, setActivado] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [respuesta, setRespuesta] = useState();
+  const [error, setError] = useState(false);
+  const [correct, setCorrect] = useState(false);
   const { id } = useParams()
 
   useEffect(() => {
@@ -17,7 +20,7 @@ function UserDetail() {
         setUserData(response);
         setApiCalled(true);
         setActivado(response.activado)
-      });
+      });      
     }
   }, [apiCalled]);
 
@@ -26,10 +29,24 @@ function UserDetail() {
     setActivado(!activado);
   }
 
+  function Resetear(){
+    ResetPassword(id).then(response =>{
+      if (response.result) {
+        setError(false)
+        setCorrect(true)
+        setRespuesta(response)
+    } else {
+        setCorrect(false)
+        setError(true)
+        setRespuesta(response)
+    }
+    });
+  }
+
   function activarUsuario() {
     UserActivation(userData.email, activado).then(response => {
       if (response) {
-        toast.success(`Se ha cambiado el estado del usuario completamente`);
+        toast.success(`Se ha cambiado el estado del usuario correctamente`);
       }
     });
   }
@@ -37,13 +54,12 @@ function UserDetail() {
   function eliminarUsuario() {
     DeleteUser(id).then(response => {
       window.location.reload()
-
     });
   }
 
   return (
     <div>
-      <nav class="flex  mt-2" aria-label="Breadcrumb">
+      <nav class="flex mt-2" aria-label="Breadcrumb">
         <ol class="inline-flex items-center space-x-1 md:space-x-3">
           <li class="inline-flex items-center">
             <a href="/controlUser" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
@@ -59,8 +75,8 @@ function UserDetail() {
           </li>
         </ol>
       </nav>
-      <div class="flex flex-row justify-evenly">
-        <div class="m-5  text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400">
+      <div class="flex justify-evenly">
+        <div class="m-5 rounded-lg border border-slate-300 dark:bg-gray-800 dark:text-blue-400">
           <div class="m-5 ">
             <div class="flex justify-center  m-6">
               <img class="rounded-full w-40 h-40" src={images} />
@@ -86,8 +102,8 @@ function UserDetail() {
         </div>
 
 
-        <div class="flex flex-col items-center justify-center">
-          <h3 class="mb-4 text-xl text-center font-semibold leading-normal text-blueGray-700 m-4">
+        <div class="flex flex-col items-center justify-center rounded-lg border border-slate-300">
+          <h3 class="mb-4 text-xl text-center font-semibold leading-normal text-blueGray-700">
             Opciones
           </h3>
           <label className="relative inline-flex items-center mb-4 cursor-pointer">
@@ -102,9 +118,27 @@ function UserDetail() {
             <span className="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">{activado ? "Usuario Activado" : "Usuario desactivado"}</span>
           </label>
           <Link to={`/controlUser`}>
-            <button onClick={() => activarUsuario()} type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">Aplicar cambios</button>
+            <button onClick={() => activarUsuario()} type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Aplicar cambios</button>
           </Link>
-          <button type="button" onClick={() => setShowModal(true)} class="m-3 text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Eliminar Usuario</button>
+          <div class="flex items-center border-b-2 border-gray-200 py-2"></div>
+          <div class="grid grid-cols-2 gap-4 px-8">          
+          <button type="button" onClick={() => Resetear()} class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Resear Contraseña</button>
+          <button type="button" onClick={() => setShowModal(true)} class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Eliminar Usuario</button>          
+          </div>
+          <div class="col-span-2 self-center mt-3">
+                    {correct ? (
+                        <div class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400" role="alert">
+                            {respuesta.contenido} {respuesta.token}
+                        </div>
+                    ) : null}
+                </div>
+                <div class="col-span-2 self-center mt-3">
+                    {error ? (
+                        <div class="p-4 mx-6 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                            {respuesta.errors[0]}
+                        </div>
+                    ) : null}
+                </div>
           {showModal ? (
             <>
               <div
@@ -125,7 +159,6 @@ function UserDetail() {
                             Si, eliminar
                           </button>
                         </Link>
-
                         <button onClick={() => setShowModal(false)} data-modal-hide="popup-modal" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">Cancelar</button>
                       </div>
                     </div>
