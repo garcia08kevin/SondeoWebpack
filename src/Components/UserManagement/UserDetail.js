@@ -20,7 +20,7 @@ function UserDetail() {
         setUserData(response);
         setApiCalled(true);
         setActivado(response.activado)
-      });      
+      });
     }
   }, [apiCalled]);
 
@@ -29,17 +29,17 @@ function UserDetail() {
     setActivado(!activado);
   }
 
-  function Resetear(){
-    ResetPassword(id).then(response =>{
+  function Resetear() {
+    ResetPassword(id).then(response => {
       if (response.result) {
         setError(false)
         setCorrect(true)
         setRespuesta(response)
-    } else {
+      } else {
         setCorrect(false)
         setError(true)
         setRespuesta(response)
-    }
+      }
     });
   }
 
@@ -75,13 +75,13 @@ function UserDetail() {
           </li>
         </ol>
       </nav>
-      <div class="flex justify-evenly">
-        <div class="m-5 rounded-lg border border-slate-300 dark:bg-gray-800 dark:text-blue-400">
+      <div class="flex lg:w-4/5 mx-auto justify-evenly">
+        <div class="lg:w-1/2 m-5 rounded-lg border border-slate-300 dark:bg-gray-800 dark:text-blue-400">
           <div class="m-5 ">
-            <div class="flex justify-center  m-6">
+            <div class="flex justify-center m-6">
               <img class="rounded-full w-40 h-40" src={images} />
             </div>
-            <div class="text-center mt-12">
+            <div class="text-center">
               <h3 class="text-xl font-semibold leading-normal mb-2 text-blueGray-700 mb-2">
                 {userData.name} {userData.lastname}
               </h3>
@@ -89,7 +89,15 @@ function UserDetail() {
                 <i class="fas fa-map-marker-alt mr-2 text-lg text-blueGray-400"></i>
                 {userData.role}
               </div>
-              <div class="mb-2 text-blueGray-600 mt-10">
+              <div class="mb-2 text-blueGray-600 mt-3">
+                <i class="fas fa-briefcase mr-2 text-lg text-blueGray-400"></i>
+                Cuenta Activada por el usuario:
+              </div>
+              <div class="mb-2 font-bold text-blueGray-600">
+                <i class="fas fa-university mr-2 text-lg text-blueGray-400"></i>
+                {userData.correoActivado ? "SI" : "NO"}
+              </div>
+              <div class="mb-2 text-blueGray-600 mt-3">
                 <i class="fas fa-briefcase mr-2 text-lg text-blueGray-400"></i>
                 Correo Registrado:
               </div>
@@ -102,7 +110,7 @@ function UserDetail() {
         </div>
 
 
-        <div class="flex flex-col items-center justify-center rounded-lg border border-slate-300">
+        <div class="lg:w-1/2 flex flex-col items-center justify-center rounded-lg border border-slate-300">
           <h3 class="mb-4 text-xl text-center font-semibold leading-normal text-blueGray-700">
             Opciones
           </h3>
@@ -121,24 +129,24 @@ function UserDetail() {
             <button onClick={() => activarUsuario()} type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Aplicar cambios</button>
           </Link>
           <div class="flex items-center border-b-2 border-gray-200 py-2"></div>
-          <div class="grid grid-cols-2 gap-4 px-8">          
-          <button type="button" onClick={() => Resetear()} class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Resear Contraseña</button>
-          <button type="button" onClick={() => setShowModal(true)} class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Eliminar Usuario</button>          
+          <div class="grid grid-cols-2 gap-4 px-8">
+            <button type="button" onClick={() => Resetear()} class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Resear Contraseña</button>
+            <button type="button" onClick={() => setShowModal(true)} class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Eliminar Usuario</button>
           </div>
           <div class="col-span-2 self-center mt-3">
-                    {correct ? (
-                        <div class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400" role="alert">
-                            {respuesta.contenido} {respuesta.token}
-                        </div>
-                    ) : null}
-                </div>
-                <div class="col-span-2 self-center mt-3">
-                    {error ? (
-                        <div class="p-4 mx-6 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-                            {respuesta.errors[0]}
-                        </div>
-                    ) : null}
-                </div>
+            {correct ? (
+              <div class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400" role="alert">
+                {respuesta.respose} {respuesta.token}
+              </div>
+            ) : null}
+          </div>
+          <div class="col-span-2 self-center mt-3">
+            {error ? (
+              <div class="p-4 mx-6 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                {respuesta.respose}
+              </div>
+            ) : null}
+          </div>
           {showModal ? (
             <>
               <div

@@ -22,9 +22,11 @@ export function ManageMarca() {
 
   const handleSubmit = async e => {
     e.preventDefault();
+    const userData = localStorage.getItem('currentUser');
+    const usuario = JSON.parse(userData);
     const marca = await crearMarca({
       nombreMarca: nombre
-    });
+    }, usuario.email);
   }
 
   const getMarcaId = async () => {

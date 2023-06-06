@@ -30,17 +30,8 @@ export async function loginUser(credentials) {
     .then(data => data.json())
 }
 
-export async function CurrentUser(login) {
-  const response = await fetch(`https://localhost:7125/api/Authentication/CurrentUser`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(login)
-  })
-  return await response.json();
-}
-
 export async function UserDetailById(id) {
-  const response = await fetch(`https://localhost:7125/api/Authentication/UserDetailById?id=${id}`, {
+  const response = await fetch(`https://localhost:7125/api/Accounts/GetUsersById?id=${id}`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(id)
@@ -49,7 +40,7 @@ export async function UserDetailById(id) {
 }
 
 export async function GetAllUserByRole(role) {
-  const response = await fetch(`https://localhost:7125/api/Admin/GetAllUserByRole?role=${role}`, {
+  const response = await fetch(`https://localhost:7125/api/Accounts/GetAllUserByRole?role=${role}`, {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' },
   })
@@ -57,7 +48,7 @@ export async function GetAllUserByRole(role) {
 }
 
 export const UserActivation = async (email, eleccion) => {
-  const response = await fetch(`https://localhost:7125/api/Admin/ActivarUsuario?email=${email}&eleccion=${eleccion}`, {
+  const response = await fetch(`https://localhost:7125/api/Accounts/ActivarUsuario?email=${email}&eleccion=${eleccion}`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' }
   })
@@ -66,7 +57,7 @@ export const UserActivation = async (email, eleccion) => {
 }
 
 export const ResetPassword = async (id) => {
-  const response = await fetch(`https://localhost:7125/api/Admin/ResetPassword?userId=${id}`, {
+  const response = await fetch(`https://localhost:7125/api/Accounts/ResetPassword?userId=${id}`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' }
   })
@@ -75,7 +66,7 @@ export const ResetPassword = async (id) => {
 }
 
 export async function createUser(user) {
-  return fetch('https://localhost:7125/api/Admin/Registro', {
+  return fetch('https://localhost:7125/api/Accounts/Registro', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -86,7 +77,7 @@ export async function createUser(user) {
 }
 
 export const getUsers = async () => {
-  const response = await fetch(`https://localhost:7125/api/Admin/GetAllUsers`, {
+  const response = await fetch(`https://localhost:7125/api/Accounts/GetUsers`, {
     method: 'GET',
     headers: { 'Content-Type': 'application/json' }
   })
@@ -95,7 +86,7 @@ export const getUsers = async () => {
 }
 
 export async function DeleteUser(id) {
-  const response = await fetch(`https://localhost:7125/api/Admin/RemoveUser?id=${id}`, {
+  const response = await fetch(`https://localhost:7125/api/Accounts/RemoveUser?id=${id}`, {
     method: 'DELETE',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(id)

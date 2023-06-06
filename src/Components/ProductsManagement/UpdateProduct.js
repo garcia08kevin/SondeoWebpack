@@ -75,7 +75,6 @@ function UpdateProduct() {
                     <div>
                         <label class="self-center block m-2 text-sm font-medium text-gray-900 dark:text-white">Categoria</label>
                         <select onChange={(e) => setCategoriaSelect(e.target.value)} value={categoriaSelect} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                        <option>Hola</option>
                             {categorias.map((val, key) => {
                                 return (
                                     <option key={val.id} value={val.id}>{val.nombreCategoria}</option>

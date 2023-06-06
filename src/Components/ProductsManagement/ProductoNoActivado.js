@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Route, useParams, Link } from "react-router-dom"
 import { GetAllUserByRole } from "../../Services/UserService";
-import { getProductosByEncuestador, getCategorias } from "../../Services/ProductService";
+import { getProductosNoActivados, getCategorias } from "../../Services/ProductService";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 
@@ -33,7 +33,7 @@ function ProductoNoActivado() {
 
     useEffect(() => {
         if (!callProductos) {
-            getProductosByEncuestador(userSelect, true).then(response => {
+            getProductosNoActivados().then(response => {
                 setProducts(response);
                 console.log(response);
                 setCallProductos(true);
@@ -127,7 +127,7 @@ function ProductoNoActivado() {
                                             {val.nombre}
                                         </td>
                                         <td class="px-6 py-4">
-                                            {val.user.name} {val.user.lastname}
+                                            {val.syncId}
                                         </td>
                                         <td class="px-6 py-4">
                                             <Link to={`/controlProduct/productDetail/${val.id}`}>

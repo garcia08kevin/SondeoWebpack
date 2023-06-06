@@ -19,12 +19,10 @@ export default function Login({ setToken }) {
     });
 
     if (!token.result) {
-      var mensaje = token.errors[0];
+      var mensaje = token.respose;
       setMessage(mensaje);
-    } else {
-      await CurrentUser({
-        token: token.token
-      }).then(respose => localStorage.setItem('currentUser', JSON.stringify(respose)))
+    } else {      
+      localStorage.setItem('currentUser', JSON.stringify(token.user))
       setToken(token);
     }
   }

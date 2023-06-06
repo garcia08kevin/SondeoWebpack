@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { getMarcas, getCategorias, getPropiedades, crearProducto } from "../../Services/ProductService";
+import axios from "axios";
 
 function CreateProduct() {
     const [apiCalled, setApiCalled] = useState(false);
@@ -11,6 +12,7 @@ function CreateProduct() {
     const [categoriaSelect, setCategoriaSelect] = useState(1);
     const [marcaSelect, setMarcaSelect] = useState(1);
     const [propiedadSelect, setPropiedadSelect] = useState(1);
+    const [selectedFile, setSelectedFile] = useState(null);
 
     useEffect(() => {
         if (!apiCalled) {
@@ -35,15 +37,28 @@ function CreateProduct() {
         e.preventDefault();
         const CurrentUserString = localStorage.getItem('currentUser');
         const CurrentUser = JSON.parse(CurrentUserString);
-        const user = await crearProducto({
-            nombre: nombre,
-            activado: activado,
-            categoriaId: categoriaSelect,
-            marcaId: marcaSelect,
-            propiedadesId: propiedadSelect,
-            customUserId: CurrentUser.id
-        });
+        let  data = new FormData();
+        data.append('Nombre', nombre);
+        data.append('imagen', selectedFile);
+        data.append('activado', activado);
+        data.append('categoriaId', categoriaSelect);
+        data.append('marcaId', marcaSelect);
+        data.append('propiedadesId', propiedadSelect);
+        data.append('UserEmail', CurrentUser.email);
+
+        const config = {     
+            headers: { 'content-type': 'multipart/form-data' }
+        }
+
+        axios.post('https://localhost:7125/api/ProductosAdmin', data, config).then(response => {
+            console.log(response);
+        })
     }
+
+    const handleFileChange = (event) => {
+        const file = event.target.files[0]
+        setSelectedFile(file);
+    };
 
     return (
         <div class="p-6 px-20">
@@ -99,6 +114,12 @@ function CreateProduct() {
                             <div className="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
                             <span className="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">{activado ? "Activado" : " Desactivado"}</span>
                         </label>
+                    </div>
+                    <div>
+
+                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Imagen del producto</label>
+                        <input onChange={handleFileChange} class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="file_input" type="file" />
+
                     </div>
                     <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Crear Producto</button>
                 </form>

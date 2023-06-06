@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom"
 import { getProducts, getCategorias, getProductsById } from "../../Services/ProductService";
-
+import images from '../../../public/icons/producto.png'
 
 function ReplaceProduct() {
     const [products, setProducts] = useState([]);
@@ -19,6 +19,7 @@ function ReplaceProduct() {
     const [marca, setMarca] = useState();
     const [nombreProducto, setNombreProducto] = useState();
     const [propiedades, setPropiedades] = useState();
+    const [imagen, setImagen] = useState();
     const { id } = useParams()
 
     const itemsPerPage = 10;
@@ -33,6 +34,7 @@ function ReplaceProduct() {
                 setCategoriaDetail(response.categoria.nombreCategoria)
                 setMarca(response.marca.nombreMarca)
                 setPropiedades(response.propiedades.nombrePropiedades)
+                setImagen(response.imagen)
             });
             setApiCalled(true);
         }
@@ -228,6 +230,10 @@ function ReplaceProduct() {
                                         <div class="py-2">
                                             <li class="text-blue-600">Nombre:</li>
                                             <span class="text-gray-700">{nombreProducto}</span>
+                                        </div>
+                                        <div class="py-2">
+                                            <li class="text-blue-600">Imagen:</li>
+                                            <img class="object-scale-down" src={imagen == null ? images : `data:image/jpeg;base64,${imagen}`} alt="Product" />
                                         </div>
                                     </ul>
                                 </div>

@@ -18,6 +18,11 @@ import ProductoNoActivado from './Components/ProductsManagement/ProductoNoActiva
 import ProductDetail from './Components/ProductsManagement/ProductDetail';
 import ControlProjects from './Components/ProjectsManagement/ControlProjects';
 import ReplaceProduct from './Components/ProductsManagement/ReplaceProduct';
+import LocalesList from './Components/ProjectsManagement/LocalesList';
+import LocalDetail from './Components/ProjectsManagement/LocalDetail';
+import EncuestaDetail from './Components/ProjectsManagement/EncuestaDetail';
+import HistoricoMediciones from './Components/ProjectsManagement/HistoricoMediciones';
+import MedicionesActivas from './Components/ProjectsManagement/MedicionesActivas';
 
 function App() {
   const { token, setToken } = useToken();
@@ -57,10 +62,12 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/controlProjects" element={<ControlProjects />}>
-              <Route index element={<UserList />} />
-              <Route path="/controlProjects/projectsList" element={<UserList />} />
-              <Route path="/controlProjects/projectsUser" element={<RegisterUser />} />
-              <Route path="/controlProjects/projectsDetail/:id" element={<UserDetail />} />
+              <Route index element={<MedicionesActivas />} />
+              <Route path="/controlProjects/localesList" element={<LocalesList />} />
+              <Route path="/controlProjects/medicionesActivas" element={<MedicionesActivas />} />
+              <Route path="/controlProjects/historicoMediciones" element={<HistoricoMediciones />} />
+              <Route path="/controlProjects/localDetail/:id" element={<LocalDetail />} />
+              <Route path="/controlProjects/encuestaDetail/:id" element={<EncuestaDetail />} />
             </Route>
             <Route path="/controlUser" element={<ControlUser />}>
               <Route index element={<UserList />} />

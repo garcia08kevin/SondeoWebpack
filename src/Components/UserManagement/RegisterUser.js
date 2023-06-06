@@ -74,14 +74,14 @@ function RegisterUser() {
                 <div class="col-span-2 self-center mt-3">
                     {correct ? (
                         <div class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400" role="alert">
-                            {respuesta.contenido} {respuesta.token}
+                            {respuesta.respose} {respuesta.token}
                         </div>
                     ) : null}
                 </div>
                 <div class="col-span-2 self-center mt-3">
                     {error ? (
                         <div class="p-4 mx-6 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-                            {respuesta.errors[0]}
+                            {respuesta.respose}
                         </div>
                     ) : null}
                 </div>

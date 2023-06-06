@@ -22,9 +22,11 @@ export function ManagePropiedades() {
 
   const handleSubmit = async e => {
     e.preventDefault();
+    const userData = localStorage.getItem('currentUser');
+    const usuario = JSON.parse(userData);
     const propiedad = await crearPropiedades({
       nombrePropiedades: nombre
-    });
+    },usuario.email);
   }
 
   const getPropiedadId = async () => {
