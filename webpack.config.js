@@ -27,9 +27,8 @@ module.exports = (env) => {
       }),
     ],
     devServer: {
-      contentBase: "./build",
-      //historyApiFallback: true,
-      //port: 2525,
+      historyApiFallback: true,
+      port: 2525,
     },
     module: {
       // exclude node_modules

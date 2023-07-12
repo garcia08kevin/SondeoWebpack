@@ -4,6 +4,7 @@ import axios from "axios";
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import Webcam from "react-webcam";
 import Quagga from 'quagga';
+import { getToken } from "../../Services/UserService";
 
 function CreateProduct() {
     const [apiCalled, setApiCalled] = useState(false);
@@ -35,7 +36,7 @@ function CreateProduct() {
         headers: {
             'Access-Control-Allow-Origin': '*',
             'content-type': 'multipart/form-data',
-            'Authorization': `Bearer ${token}`
+            'Authorization': `Bearer ${getToken()}`
         },
         withCredentials: true,
         credentials: 'same-origin',
