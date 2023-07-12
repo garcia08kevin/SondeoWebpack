@@ -35,6 +35,11 @@ module.exports = (env, argv) => {
       compress: true,
       port: 8080,
       historyApiFallback: true,
+      allowedHosts: [
+        'localhost',
+        '.localhost',
+        // Add other allowed hostnames or domains here if needed
+      ],
     },
     module: {
       // exclude node_modules
