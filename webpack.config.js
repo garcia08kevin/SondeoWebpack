@@ -45,10 +45,10 @@ module.exports = (env, argv) => {
         },
         {
           test: /\.(jpg|png|svg)$/i,
-          loader: 'url-loader',
-          options: {
-            outputPath: 'images',
-          }
+          type: 'asset/resource',
+          generator: {
+            filename: 'images/[name].[contenthash][ext]',
+          },
         },
         {
           test: /\.js$/,
