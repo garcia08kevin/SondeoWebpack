@@ -1,5 +1,5 @@
 export const crearMedicion = async (id) => {
-    const response = await fetch(`https://localhost:7125/api/EncuestasAdmin/CrearMedicion?ciudadId=${id}`, {
+    const response = await fetch(`${process.env.API_URL}/api/Mediciones/CrearMedicion?ciudadId=${id}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' }
     })
@@ -7,7 +7,7 @@ export const crearMedicion = async (id) => {
 }
 
 export const historico = async (id) => {
-    const response = await fetch(`https://localhost:7125/api/EncuestasAdmin/HistoricoMediciones/${id}`, {
+    const response = await fetch(`${process.env.API_URL}/api/Mediciones/HistoricoMediciones/${id}`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
     })
@@ -15,7 +15,7 @@ export const historico = async (id) => {
 }
 
 export const getMediciones = async () => {
-    const response = await fetch(`https://localhost:7125/api/EncuestasAdmin/MedicionesActivas`, {
+    const response = await fetch(`${process.env.API_URL}/api/Mediciones/MedicionesActivas`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
     })
@@ -23,7 +23,7 @@ export const getMediciones = async () => {
 }
 
 export const getDetalleEncuesta = async (id) => {
-    const response = await fetch(`https://localhost:7125/api/EncuestasAdmin/DetalleEncuesta/${id}`, {
+    const response = await fetch(`${process.env.API_URL}/api/Mediciones/DetalleEncuesta/${id}`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
     })
@@ -31,7 +31,7 @@ export const getDetalleEncuesta = async (id) => {
 }
 
 export const getCiudades = async () => {
-    const response = await fetch(`https://localhost:7125/api/Cuidades`, {
+    const response = await fetch(`${process.env.API_URL}/api/ManageLocales/Ciudades`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
     })
@@ -39,7 +39,7 @@ export const getCiudades = async () => {
 }
 
 export const getCanales = async () => {
-    const response = await fetch(`https://localhost:7125/api/Canales`, {
+    const response = await fetch(`${process.env.API_URL}/api/ManageLocales/Canales`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
     })
@@ -47,7 +47,7 @@ export const getCanales = async () => {
 }
 
 export const getLocales = async (id) => {
-    const response = await fetch(`https://localhost:7125/api/Locales?idCiudad=${id}`, {
+    const response = await fetch(`${process.env.API_URL}/api/ManageLocales/Locales?idCiudad=${id}`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
     })
@@ -55,7 +55,7 @@ export const getLocales = async (id) => {
 }
 
 export const getLocalesById = async (id) => {
-    const response = await fetch(`https://localhost:7125/api/Locales/${id}`, {
+    const response = await fetch(`${process.env.API_URL}/api/Mediciones/Locales/${id}`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
     })
@@ -63,7 +63,7 @@ export const getLocalesById = async (id) => {
 }
 
 export const getEncuestasFromLocal = async (id) => {
-    const response = await fetch(`https://localhost:7125/api/EncuestasAdmin/EncuestasFromLocal/${id}`, {
+    const response = await fetch(`${process.env.API_URL}/api/Mediciones/EncuestasFromLocal/${id}`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
     })

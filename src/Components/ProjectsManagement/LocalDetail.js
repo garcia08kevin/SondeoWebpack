@@ -45,7 +45,11 @@ function LocalDetail() {
                 <div className="container py-10 mx-auto">
                     <div className="lg:w-4/5 mx-auto flex flex-wrap">
                         <div className="lg:w-1/2 w-full">
-                            <MapContainer center={[-0.11968, -78.48169]} zoom={9} style={{ height: '400px', width: '100%' }}>
+                            < MapContainer
+                            center={[51.505, -0.09]}
+                            zoom={13}
+                            style={{ height: '100%', width: '100%' }}
+                            >
                                 <TileLayer url={url} attribution={attribution} />
                             </MapContainer>
                         </div>

@@ -41,8 +41,8 @@ function RegisterUser() {
     }
 
     return (
-        <div class="bg-white rounded-lg ">
-            <h2 class="text-2xl font-bold dark:text-white">Agregar Usuario</h2>
+        <div class="bg-white dark:bg-slate-800 rounded-lg ">
+            <h2 class="pt-2 text-2xl font-bold dark:text-white">Agregar Usuario</h2>
             <form onSubmit={handleSubmit} class="grid grid-cols-2 gap-4 sm:p-8 justify-around">
                 <div class="flex flex-col">
                     <label for="text" class="self-center block m-2 text-sm font-medium text-gray-900 dark:text-white">Nombre</label>

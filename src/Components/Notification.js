@@ -40,8 +40,7 @@ function Notificacion() {
   }
 
   return (
-    <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
-
+    <div class="h-full p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
       <div class="flex items-center justify-center">
         <h2 class="m-4 text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-4xl dark:text-white">Notificaciones</h2>
       </div>

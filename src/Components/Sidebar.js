@@ -2,20 +2,19 @@ import { nroNotificaciones } from "../Services/UserService";
 import React, { useState } from 'react';
 import images from '../../public/icons/logo.png'
 
+export const logout = async () => {
+   await localStorage.clear();
+   window.location.reload()
+}
 
 function Sidebar() {
-   let [nNotificaciones, setNotificaciones] = useState();
-
-   const logout = async () => {
-      await localStorage.clear();
-      window.location.reload()
-   }
+   let [nNotificaciones, setNotificaciones] = useState();   
 
    return (
       <div class="">
          <aside id="logo-sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
             <div class="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
-               <a href="/" class="flex justify-center items-center pl-2.5 mb-5">
+               <a href="/home" class="flex justify-center items-center pl-2.5 mb-5">
                   <img class="object-fill h-20 w-50" src={images} />
                </a>
                <ul class="space-y-2 font-medium">

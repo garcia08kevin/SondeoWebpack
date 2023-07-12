@@ -111,7 +111,7 @@ function UserDetail() {
 
 
         <div class="lg:w-1/2 flex flex-col items-center justify-center rounded-lg border border-slate-300">
-          <h3 class="mb-4 text-xl text-center font-semibold leading-normal text-blueGray-700">
+          <h3 class="dark:text-white mb-4 text-xl text-center font-semibold leading-normal text-blueGray-700">
             Opciones
           </h3>
           <label className="relative inline-flex items-center mb-4 cursor-pointer">
