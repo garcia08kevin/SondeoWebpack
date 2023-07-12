@@ -27,8 +27,7 @@ module.exports = (env) => {
       }),
     ],
     devServer: {
-      historyApiFallback: true,
-      port: 2525,
+      disableHostCheck: true
     },
     module: {
       // exclude node_modules
