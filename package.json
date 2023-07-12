@@ -88,7 +88,7 @@
     "tailwindcss": "^3.3.1",
     "webpack": "^5.80.0",
     "webpack-dev-server": "^4.13.3",
-    "webpack-cli": "^4.4.0"
+    "webpack-cli": "^5.1.4"
   },
   "keywords": [],
   "author": "",
