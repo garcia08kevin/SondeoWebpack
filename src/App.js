@@ -29,20 +29,20 @@ function App() {
   const { token, setToken } = useToken();
   const [connection, setConnection] = useState(null);
   const [showModal, setShowModal] = useState(false);
-
-  if (getToken() != undefined) {
-    let decodedToken = jwtDecode(getToken())
-    let currentDate = new Date();
-    if (decodedToken.exp * 1000 - 300000 < currentDate.getTime()) {
-      setShowModal(true)
-    }
-    if (decodedToken.exp * 1000 < currentDate.getTime()) {
-      localStorage.removeItem("token");
-      logout()
-    }
-  }
+  
 
   useEffect(() => {
+    if (getToken() != undefined) {
+      let decodedToken = jwtDecode(getToken())
+      let currentDate = new Date();
+      if (decodedToken.exp * 1000 - 300000 < currentDate.getTime()) {
+        setShowModal(true)
+      }
+      if (decodedToken.exp * 1000 < currentDate.getTime()) {
+        localStorage.removeItem("token");
+        logout()
+      }
+    }
     const connect = new HubConnectionBuilder()
       .withUrl(`${process.env.API_URL}/hubs/notifications`)
       .withAutomaticReconnect()

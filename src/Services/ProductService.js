@@ -47,13 +47,14 @@ export const UpdateCategoria = async (id, propiedad) => {
 }
 
 export const deleteCategoria = async (id) => {
-    await fetch(`${process.env.API_URL}/api/ManageProductos/Categorias/${id}`, {
+    const response = await fetch(`${process.env.API_URL}/api/ManageProductos/Categorias/${id}`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${getToken()}`
         }
     })
+    return response.json();
 }
 
 export const getMarcas = async () => {
@@ -103,13 +104,14 @@ export const UpdateMarca = async (id, propiedad) => {
 }
 
 export const deleteMarca = async (id) => {
-    await fetch(`${process.env.API_URL}/api/ManageProductos/Marcas/${id}`, {
+    const response = await fetch(`${process.env.API_URL}/api/ManageProductos/Marcas/${id}`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${getToken()}`
         }
     })
+    return response.json();
 }
 
 export const getPropiedades = async () => {
@@ -159,13 +161,14 @@ export const UpdatePropiedad = async (id, propiedad) => {
 }
 
 export const deletePropiedad = async (id) => {
-    await fetch(`${process.env.API_URL}/api/ManageProductos/Propiedades/${id}`, {
+    const response = await fetch(`${process.env.API_URL}/api/ManageProductos/Propiedades/${id}`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${getToken()}`
         }
     })
+    return response.json();
 }
 
 export const getProductsById = async (id) => {

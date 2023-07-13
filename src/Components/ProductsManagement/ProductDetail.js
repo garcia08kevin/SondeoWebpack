@@ -4,7 +4,6 @@ import { getProductsById, ProductActivation, deleteProducts } from "../../Servic
 import { toast } from 'react-toastify';
 import Barcode from 'react-barcode';
 import UpdateProduct from "./UpdateProduct";
-import images from '../../../public/icons/producto.png'
 import axios from "axios";
 import { getToken } from "../../Services/UserService";
 

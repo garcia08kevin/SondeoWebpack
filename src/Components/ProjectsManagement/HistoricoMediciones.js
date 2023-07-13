@@ -101,7 +101,7 @@ function HistoricoMediciones() {
                                             return (
                                                 <tr key={val.id} class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                                     <td value={val.id} class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                                        <a href={`http://localhost:2525/controlProjects/localDetail/${val.localId}`} class="text-blue-600 dark:text-blue-500 hover:underline">{val.local.nombre}</a>
+                                                        <a href={`/controlProjects/localDetail/${val.localId}`} class="text-blue-600 dark:text-blue-500 hover:underline">{val.local.nombre}</a>
                                                     </td>
                                                     <td class="px-6 py-4">
                                                         {fechaFomato(val.fechaInicio)}
@@ -114,7 +114,7 @@ function HistoricoMediciones() {
                                                     </td>
                                                     <td class="px-6 py-4">
 
-                                                        <a href={`http://localhost:2525/controlUser/userDetail/${val.customUserId}`} class="text-blue-600 dark:text-blue-500 hover:underline">{val.customUser.name} {val.customUser.lastname}</a>
+                                                        <a href={`/controlUser/userDetail/${val.customUserId}`} class="text-blue-600 dark:text-blue-500 hover:underline">{val.customUser.name} {val.customUser.lastname}</a>
                                                     </td>
                                                     <td class="px-6 py-4">
                                                         <Link to={`/controlProjects/encuestaDetail/${val.id}`}>

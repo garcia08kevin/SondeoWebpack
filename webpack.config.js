@@ -15,6 +15,11 @@ module.exports = (env, argv) => {
       filename: isProduction ? '[name].[contenthash].js' : 'index_bundle.js',
       publicPath: '/'
     },
+    performance: {
+      hints: false,
+      maxEntrypointSize: 512000,
+      maxAssetSize: 512000
+    },
     plugins: [
       new NodePolyfillPlugin(),
       new MiniCssExtractPlugin({

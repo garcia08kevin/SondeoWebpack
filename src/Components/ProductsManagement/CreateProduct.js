@@ -8,7 +8,6 @@ import { getToken } from "../../Services/UserService";
 
 function CreateProduct() {
     const [apiCalled, setApiCalled] = useState(false);
-    const [activado, setActivado] = useState(false);
     const [marcas, setMarcas] = useState([]);
     const [categorias, setCategorias] = useState([]);
     const [propiedades, setPropiedades] = useState([]);
@@ -42,6 +41,8 @@ function CreateProduct() {
         credentials: 'same-origin',
     }
 
+    
+
     useEffect(() => {
         if (!apiCalled) {
             getMarcas().then(response => {
@@ -59,10 +60,6 @@ function CreateProduct() {
             setApiCalled(true);
         }
     }, [apiCalled]);
-
-    function handleToggle() {
-        setActivado(!activado);
-    }
 
     const handleSubmit = async e => {
         e.preventDefault();
@@ -91,9 +88,9 @@ function CreateProduct() {
                 Quagga.decodeSingle(
                     {
                         src: imageSrc,
-                        numOfWorkers: 0, // Disable web workers to prevent conflicts with React
+                        numOfWorkers: 0,
                         decoder: {
-                            readers: ['ean_reader'], // EAN-13 barcode reader
+                            readers: ['ean_reader'],
                         },
                     },
                     (result) => {
@@ -258,22 +255,10 @@ function CreateProduct() {
                             style={{ display: 'none' }}
                             onChange={handleFileChange}
                         />
-
                     </div>
-                    <div class="pt-2 flex self-center">
-                        <label className="relative inline-flex items-center mb-4 cursor-pointer">
-                            <input
-                                type="checkbox"
-                                value=""
-                                className="sr-only peer"
-                                checked={activado}
-                                onChange={handleToggle}
-                            />
-                            <div className="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
-                            <span className="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">{activado ? "Activado" : " Desactivado"}</span>
-                        </label>
+                    <div class="col-span-2 flex justify-center">
+                        <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Crear Producto</button>
                     </div>
-                    <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Crear Producto</button>
                 </form>
                 <section class="grow">
                     {preliminar ? (

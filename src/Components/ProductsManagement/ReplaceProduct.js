@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom"
 import { getProducts, getCategorias, getProductsById } from "../../Services/ProductService";
-import images from '../../../public/icons/producto.png'
 
 function ReplaceProduct() {
     const [products, setProducts] = useState([]);
