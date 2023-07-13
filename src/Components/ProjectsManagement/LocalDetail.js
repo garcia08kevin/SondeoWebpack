@@ -1,5 +1,5 @@
 import { Route, useParams, Link } from "react-router-dom"
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { getLocalesById } from "../../Services/EncuestaService";
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import L from 'leaflet';
