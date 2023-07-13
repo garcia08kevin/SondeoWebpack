@@ -2,6 +2,10 @@ import { Route, useParams, Link } from "react-router-dom"
 import { useEffect, useRef, useState } from "react";
 import { getLocalesById } from "../../Services/EncuestaService";
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import L from 'leaflet';
+import icon from 'leaflet/dist/images/marker-icon.png';
+import iconShadow from 'leaflet/dist/images/marker-shadow.png';
+import 'leaflet/dist/leaflet.css';
 
 function LocalDetail() {
     const [apiCalled, setApiCalled] = useState(false);
@@ -9,6 +13,13 @@ function LocalDetail() {
     const [ciudad, setCiudad] = useState("");
 
     const { id } = useParams()
+
+    let DefaultIcon = L.icon({
+        iconUrl: icon,
+        shadowUrl: iconShadow,
+    });
+
+    L.Marker.prototype.options.icon = DefaultIcon;
 
     useEffect(() => {
         if (!apiCalled) {
@@ -41,16 +52,17 @@ function LocalDetail() {
                     </li>
                 </ol>
             </nav>
-            <section class="text-gray-700 body-font overflow-hidden bg-white">
+            <section className="text-gray-700 body-font overflow-hidden bg-white">
                 <div className="container py-10 mx-auto">
                     <div className="lg:w-4/5 mx-auto flex flex-wrap">
                         <div className="lg:w-1/2 w-full">
-                            < MapContainer
-                            center={[51.505, -0.09]}
-                            zoom={13}
-                            style={{ height: '100%', width: '100%' }}
+                            <MapContainer className="w-full h-96"
+                                center={[51.505, -0.09]}
+                                zoom={13}
+                                scrollWheelZoom={false}
                             >
                                 <TileLayer url={url} attribution={attribution} />
+                                <Marker position={[51.505, -0.09]} />
                             </MapContainer>
                         </div>
                         <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">

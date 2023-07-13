@@ -36,7 +36,7 @@ module.exports = (env, argv) => {
       port: 8080,
       historyApiFallback: true,
       allowedHosts: [
-        'https://sondeoweb.onrender.com',
+        's',
         '.localhost',
         // Add other allowed hostnames or domains here if needed
       ],

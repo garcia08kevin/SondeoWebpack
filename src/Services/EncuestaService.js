@@ -55,7 +55,7 @@ export const getLocales = async (id) => {
 }
 
 export const getLocalesById = async (id) => {
-    const response = await fetch(`${process.env.API_URL}/api/Mediciones/Locales/${id}`, {
+    const response = await fetch(`${process.env.API_URL}/api/ManageLocales/Locales/${id}`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
     })
