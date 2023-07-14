@@ -8,7 +8,8 @@ import { ManageMarca } from "./ManageMarca";
 import { ManageCategoria } from "./ManageCategoria";
 import { toast } from 'react-toastify';
 import Barcode from 'react-barcode';
-import images from '../../../public/icons/productoSinFoto.png'
+import images from '../../../public/icons/producto.png'
+import OptionProduct from "./OptionProduct";
 
 function PoductList() {
     const [products, setProducts] = useState([]);
@@ -21,24 +22,35 @@ function PoductList() {
     const [showOptions, setShowOptions] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
     const [filtroCategoria, setFiltroCategoria] = useState('');
-    const [filtroEstado, setFiltroEstado] = useState('');
+    const [mostrarOpciones, setMostrarOpciones] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
+    const [seleccionado, setSeleccionado] = useState();
     const [loading, setLoading] = useState(true);
 
     const itemsPerPage = 10;
 
     const changeHandler = e => {
         if (e.result) {
+            setLoading(true);
+            setMostrarOpciones(false);
             setShowCategorias(false);
             setShowMarcas(false);
             setShowPropiedades(false);
             setShowModal(false);
             toast.success(`${e.respose}`);
+            getProducts().then(response => {
+                setProducts(response);
+                setLoading(false);
+            });
         } else if (!e.result) {
             toast.error(`${e.respose}`);
         }
     }
 
+    const opciones = event => {        
+        setSeleccionado(event.currentTarget.id);
+        setMostrarOpciones(true)
+    };
 
     useEffect(() => {
         if (!apiCalled) {
@@ -70,6 +82,10 @@ function PoductList() {
         } else if (op === 3) {
             setShowCategorias(!showCategorias);
             setShowOptions(false);
+        }else if (op === 4) {
+            setMostrarOpciones(!mostrarOpciones);
+            setShowOptions(false);
+            setSeleccionado(null);
         }
     };
 
@@ -160,7 +176,7 @@ function PoductList() {
                                     return (
                                         <tr key={val.barCode} class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                             <td class="w-64 p-4">
-                                                {<img class="object-fill h-30 w-60" src={val.imagen == null ? images : `data:image/jpeg;base64,${val.imagen}`} alt="Product" />}
+                                                {<img class="object-fill" src={val.imagen == null ? images : `data:image/jpeg;base64,${val.imagen}`} alt="Product" />}
                                             </td>
                                             <td class="px-6 py-4">
                                                 <Barcode value={`${val.barCode}`} format="EAN13" />
@@ -172,11 +188,9 @@ function PoductList() {
                                                 <p><span class="font-bold">Propiedad:</span> {val.propiedades.nombrePropiedades}</p>
                                             </td>
                                             <td class="px-6 py-4">
-                                                <Link to={`/controlProduct/productDetail/${val.barCode}`}>
-                                                    <button type="button" class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-full text-sm px-2 py-2  dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
-                                                        <MoreVertIcon />
-                                                    </button>
-                                                </Link>
+                                                <button id={val.barCode} onClick={opciones} class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-full text-sm px-2 py-2  dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
+                                                    <MoreVertIcon />
+                                                </button>
                                             </td>
                                         </tr>
                                     )
@@ -196,7 +210,7 @@ function PoductList() {
                                                 <span class="sr-only">Close modal</span>
                                             </button>
                                             <div class="p-5 text-center">
-                                                <CreateProduct />
+                                                <CreateProduct respuesta={changeHandler}/>
 
                                                 <button onClick={() => handleModalOpen(0)} data-modal-hide="popup-modal" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">Cancelar</button>
                                             </div>
@@ -269,6 +283,29 @@ function PoductList() {
                                             <div class="p-5 text-center">
                                                 <ManageCategoria respuesta={changeHandler} />
                                                 <button onClick={() => handleModalOpen(3)} data-modal-hide="popup-modal" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">Cancelar</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+                        </>
+                    ) : null}
+                    {mostrarOpciones ? (
+                        <>
+                            <div
+                                className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
+                            >
+                                <div className="relative w-auto my-6 mx-auto max-w-3xl">
+                                    <div class="">
+                                        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                            <button onClick={() => handleModalOpen(4)} type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white" data-modal-hide="popup-modal">
+                                                <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                                                <span class="sr-only">Close modal</span>
+                                            </button>
+                                            <div class="p-5 text-center">                                                
+                                                <OptionProduct id={seleccionado} respuesta={changeHandler}/>
+                                                <button onClick={() => handleModalOpen(4)} data-modal-hide="popup-modal" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">Cancelar</button>
                                             </div>
                                         </div>
                                     </div>

@@ -14,10 +14,7 @@ import RegisterUser from './Components/UserManagement/RegisterUser';
 import UserDetail from './Components/UserManagement/UserDetail';
 import ControlProduct from './Components/ProductsManagement/ControlProduct';
 import PoductList from './Components/ProductsManagement/ProductList';
-import ProductoNoActivado from './Components/ProductsManagement/ProductoNoActivado'
-import ProductDetail from './Components/ProductsManagement/ProductDetail';
 import ControlProjects from './Components/ProjectsManagement/ControlProjects';
-import ReplaceProduct from './Components/ProductsManagement/ReplaceProduct';
 import LocalesList from './Components/ProjectsManagement/LocalesList';
 import LocalDetail from './Components/ProjectsManagement/LocalDetail';
 import EncuestaDetail from './Components/ProjectsManagement/EncuestaDetail';
@@ -121,9 +118,6 @@ function App() {
             <Route path="/controlProduct" element={<ControlProduct />}>
               <Route index element={<PoductList />} />
               <Route path="/controlProduct/productList" element={<PoductList />} />
-              <Route path="/controlProduct/noActivados" element={<ProductoNoActivado />} />
-              <Route path="/controlProduct/productDetail/:id" element={<ProductDetail />} />
-              <Route path="/controlProduct/replaceProduct/:id" element={<ReplaceProduct />} />
             </Route>
             <Route path="/notificaciones" element={<Notificacion />} />
             <Route path="*" element={<NoEncontrada />} />

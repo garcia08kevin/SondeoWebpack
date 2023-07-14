@@ -6,7 +6,7 @@ import Webcam from "react-webcam";
 import Quagga from 'quagga';
 import { getToken } from "../../Services/UserService";
 
-function CreateProduct() {
+const CreateProduct = ({ respuesta }) => {
     const [apiCalled, setApiCalled] = useState(false);
     const [marcas, setMarcas] = useState([]);
     const [categorias, setCategorias] = useState([]);
@@ -22,7 +22,7 @@ function CreateProduct() {
     const [imagen, setImagen] = useState(null);
     const [preliminar, setPreliminar] = useState(false);
     const webcamRef = useRef(null);
-    const [token, setToken] = useState("");
+    const [selectedImage, setSelectedImage] = useState(null);
 
 
     const videoConstraints = {
@@ -53,10 +53,7 @@ function CreateProduct() {
             });
             getPropiedades().then(response => {
                 setPropiedades(response);
-            });
-            const tokenString = localStorage.getItem('token');
-            const userToken = JSON.parse(tokenString);
-            setToken(userToken?.token)
+            });           
             setApiCalled(true);
         }
     }, [apiCalled]);
@@ -65,15 +62,15 @@ function CreateProduct() {
         e.preventDefault();
         let data = new FormData();
         data.append('Nombre', nombre);
-        data.append('imagen', selectedFile);
-        data.append('activado', activado);
+        data.append('imagen', selectedImage);
+        data.append('activado', true);
         data.append('categoriaId', categoriaSelect);
         data.append('marcaId', marcaSelect);
         data.append('propiedadesId', propiedadSelect);
         data.append('barCode', codeBar);
 
-        axios.post(`${process.env.API_URL}/api/ManageProductos/Productos`, data, config).then(response => {
-            console.log(response);
+        axios.post(`https://localhost:7125/api/ManageProductos/Productos`, data, config).then(response => {
+            respuesta(response.data);
         })
     }
 
@@ -111,7 +108,10 @@ function CreateProduct() {
 
     const handleFileChange = (event) => {
         const file = event.target.files[0]
-        setSelectedFile(file);
+        setPreliminar(true)
+        const objectUrl = URL.createObjectURL(file)
+        setImagen(objectUrl)
+        setSelectedImage(file);
     };
 
     const guardarFotoCodigo = (event) => {
