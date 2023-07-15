@@ -3,6 +3,7 @@ import { Link } from "react-router-dom"
 import { getUsers } from "../../Services/UserService";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import RegisterUser from "./RegisterUser";
+import images from '../../../public/icons/usuario.png'
 
 function UserList() {
   const [users, setUsers] = useState([]);
@@ -31,6 +32,7 @@ function UserList() {
     if (!apiCalled) {
       getUsers().then(response => {
         setUsers(response);
+        console.log(response)
         setApiCalled(true);
         setLoading(false)
       });
@@ -59,16 +61,16 @@ function UserList() {
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
               <tr>
                 <th scope="col" class="px-6 py-3">
-                  Id
-                </th>
-                <th scope="col" class="px-6 py-3">
                   Nombre
                 </th>
                 <th scope="col" class="px-6 py-3">
-                  Email
+                  Role
                 </th>
                 <th scope="col" class="px-6 py-3">
                   Estado
+                </th>
+                <th scope="col" class="text-center px-6 py-3">
+                  Cuenta Verificada
                 </th>
                 <th scope="col" class="px-6 py-3">
                   Detalles
@@ -80,21 +82,26 @@ function UserList() {
                 return (
 
                   <tr key={val.id} class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                    <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                      {val.id}
+                    <th scope="row" class="flex items-center px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                      <img class="w-10 h-10 rounded-full" src={val.imagen == null ? images : `data:image/jpeg;base64,${val.imagen}`} alt="usuario" />
+                      <div class="pl-3">
+                        <div class="text-base font-semibold">{val.name} {val.lastname}</div>
+                        <div class="font-normal text-gray-500">Nombre Usuario: {val.userName}</div>
+                        <div class="font-normal text-gray-500">{val.email === "" ? "Sin Correo Registrado" : `${val.email}`}</div>
+                      </div>
                     </th>
                     <td class="px-6 py-4">
-                      {val.name} {val.lastname}
+                      {val.role}
                     </td>
                     <td class="px-6 py-4">
-                      {val.email}
-                    </td>
-                    <td class="px-6 py-4">
-                      {val.cuentaActiva == true ? <div class="flex items-center">
+                      {val.activado == true ? <div class="flex items-center">
                         <div class="h-2.5 w-2.5 rounded-full bg-green-500 mr-2"></div> Activado
                       </div> : <div class="flex items-center">
                         <div class="h-2.5 w-2.5 rounded-full bg-red-500 mr-2"></div> Desactivado
                       </div>}
+                    </td>
+                    <td class="text-center px-6 py-4">
+                      {val.correoActivado ? <span class="bg-green-100 text-green-800 text-xs font-medium px-4 py-2 rounded dark:bg-gray-700 dark:text-green-400 border border-green-400">SI</span> : <span class="bg-red-100 text-red-800 text-xs font-medium mr-2 px-4 py-2 rounded dark:bg-gray-700 dark:text-red-400 border border-red-400">NO</span>}
                     </td>
                     <td class="px-6 py-4">
                       <Link to={`/controlUser/userDetail/${val.id}`}>

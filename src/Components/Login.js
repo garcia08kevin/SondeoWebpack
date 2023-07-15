@@ -7,7 +7,7 @@ export default function Login({ setToken }) {
 
   const [message, setMessage] = useState();
   const [mostrarMensaje, setMostrarMensaje] = useState(false);
-  const [email, setEmail] = useState();
+  const [userName, setUserName] = useState();
   const [password, setPassword] = useState();
   const [loading, setLoading] = useState(false);
 
@@ -16,7 +16,7 @@ export default function Login({ setToken }) {
     e.preventDefault();
     setLoading(true);
     const token = await loginUser({
-      email,
+      userName,
       password
     });
     if (!token.result) {
@@ -41,8 +41,8 @@ export default function Login({ setToken }) {
             <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
               <form onSubmit={handleSubmit} class="space-y-4 md:space-y-6">
                 <div>
-                  <label for="email" class="block mb-3 text-sm font-medium text-gray-900 dark:text-white">Correo Electronico</label>
-                  <input onChange={e => setEmail(e.target.value)} type="email" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="" />
+                  <label class="block mb-3 text-sm font-medium text-gray-900 dark:text-white">Nombre de Usuario</label>
+                  <input onChange={e => setUserName(e.target.value)} type="text"class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="" />
                 </div>
                 <div>
                   <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contraseña</label>

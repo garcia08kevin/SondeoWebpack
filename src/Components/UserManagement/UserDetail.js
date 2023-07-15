@@ -18,6 +18,7 @@ function UserDetail() {
     if (!apiCalled) {
       UserDetailById(id).then(response => {
         setUserData(response);
+        console.log(response);
         setApiCalled(true);
         setActivado(response.activado)
       });
@@ -45,9 +46,7 @@ function UserDetail() {
 
   function activarUsuario() {
     UserActivation(userData.email, activado).then(response => {
-      if (response) {
-        toast.success(`Se ha cambiado el estado del usuario correctamente`);
-      }
+      console.log(response)
     });
   }
 
@@ -75,42 +74,23 @@ function UserDetail() {
           </li>
         </ol>
       </nav>
-      <div class="flex lg:w-4/5 mx-auto justify-evenly">
-        <div class="lg:w-1/2 m-5 rounded-lg border border-slate-300 dark:bg-gray-800 dark:text-blue-400">
-          <div class="m-5 ">
-            <div class="flex justify-center m-6">
-              <img class="rounded-full w-40 h-40" src={images} />
-            </div>
-            <div class="text-center">
-              <h3 class="text-xl font-semibold leading-normal mb-2 text-blueGray-700 mb-2">
-                {userData.name} {userData.lastname}
-              </h3>
-              <div class="text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
-                <i class="fas fa-map-marker-alt mr-2 text-lg text-blueGray-400"></i>
-                {userData.role}
-              </div>
-              <div class="mb-2 text-blueGray-600 mt-3">
-                <i class="fas fa-briefcase mr-2 text-lg text-blueGray-400"></i>
-                Cuenta Activada por el usuario:
-              </div>
-              <div class="mb-2 font-bold text-blueGray-600">
-                <i class="fas fa-university mr-2 text-lg text-blueGray-400"></i>
-                {userData.correoActivado ? "SI" : "NO"}
-              </div>
-              <div class="mb-2 text-blueGray-600 mt-3">
-                <i class="fas fa-briefcase mr-2 text-lg text-blueGray-400"></i>
-                Correo Registrado:
-              </div>
-              <div class="mb-2 text-blueGray-600">
-                <i class="fas fa-university mr-2 text-lg text-blueGray-400"></i>
-                {userData.email}
-              </div>
+      <div class="mt-4 grid grid-cols-2 gap-4">
+        <div class="w-full bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+          <div class="flex justify-end px-4 pt-4">
+          </div>
+          <div class="flex flex-col items-center pb-10">
+            <img class="w-24 h-24 mb-3 rounded-full shadow-lg" src={images} alt="perfil" />
+            <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white">{userData.name} {userData.lastname}</h5>
+            <span class="text-sm text-gray-500 dark:text-gray-400">{userData.role}</span>
+            <span class="text-sm text-gray-500 dark:text-gray-400">{userData.email}</span>
+            <div class="flex mt-4 space-x-3 md:mt-6">
+              <a class="inline-flex items-center px-4 py-2 text-sm font-medium text-center  focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Estado:</a>
+              {userData.correoActivado ? <span class="bg-green-100 text-green-800 text-xs font-medium px-4 py-2 rounded dark:bg-gray-700 dark:text-green-400 border border-green-400">Verificada</span> : <span class="bg-red-100 text-red-800 text-xs font-medium mr-2 px-4 py-2 rounded dark:bg-gray-700 dark:text-red-400 border border-red-400">No Verificada</span>}
             </div>
           </div>
         </div>
 
-
-        <div class="lg:w-1/2 flex flex-col items-center justify-center rounded-lg border border-slate-300">
+        <div class="flex flex-col items-center justify-center rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 border border-slate-300">
           <h3 class="dark:text-white mb-4 text-xl text-center font-semibold leading-normal text-blueGray-700">
             Opciones
           </h3>

@@ -169,7 +169,7 @@ function PoductList() {
                             </tr>
                         </thead>
                         <tbody>
-                            {products.filter((product) => (product.nombre.toLowerCase().includes(searchQuery.toLowerCase()) || product.categoria.nombreCategoria.toLowerCase().includes(searchQuery.toLowerCase()) || product.marca.nombreMarca.toLowerCase().includes(searchQuery.toLowerCase())) &&
+                            {products.filter((product) => (product.barCode.toString().toLowerCase().includes(searchQuery.toLowerCase()) || product.categoria.nombreCategoria.toLowerCase().includes(searchQuery.toLowerCase()) || product.marca.nombreMarca.toLowerCase().includes(searchQuery.toLowerCase())) &&
                                 ((filtroCategoria === '' || filtroCategoria === 'Informacion del producto') ? true : (product.categoria.nombreCategoria === filtroCategoria))
                             ).slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
                                 .map((val, key) => {
