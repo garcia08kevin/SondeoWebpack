@@ -25,7 +25,6 @@ function LocalDetail() {
         if (!apiCalled) {
             getLocalesById(id).then(response => {
                 setLocalData(response);
-                setCiudad(response.ciudad)
             });
             setApiCalled(true);
         }
@@ -67,7 +66,7 @@ function LocalDetail() {
                         </div>
                         <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
                             <h1 className="text-2xl title-font text-gray-500 tracking-widest py-2"><span className="uppercase">Nombre del Local: </span>{localData.nombre}</h1>
-                            <h2 className="text-gray-900 text-2xl title-font font-medium py-2">Ciudad: {ciudad.nombreCiudad}</h2>
+                            <h2 className="text-gray-900 text-2xl title-font font-medium py-2">Ciudad: </h2>
                             <h2 className="text-gray-900 text-2xl title-font py-2">Direccion: {localData.direccion}</h2>
                             <div className="flex items-center border-b-2 border-gray-200 py-2"></div>
                         </div>

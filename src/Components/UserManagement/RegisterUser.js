@@ -8,6 +8,7 @@ function RegisterUser() {
     const [nombre, setNombre] = useState();
     const [apellido, setApellido] = useState();
     const [email, setEmail] = useState("");
+    const [userName, setUserName] = useState();
     const [error, setError] = useState(false);
     const [correct, setCorrect] = useState(false);
     const [respuesta, setRespuesta] = useState();
@@ -26,6 +27,7 @@ function RegisterUser() {
         const user = await createUser({
             name: nombre,
             lastname: apellido,
+            userName: userName,
             email: email,
             role: roleSelect
         });
@@ -45,20 +47,24 @@ function RegisterUser() {
             <h2 class="pt-2 text-2xl font-bold dark:text-white">Agregar Usuario</h2>
             <form onSubmit={handleSubmit} class="grid grid-cols-2 gap-4 sm:p-8 justify-around">
                 <div class="flex flex-col">
-                    <label for="text" class="self-center block m-2 text-sm font-medium text-gray-900 dark:text-white">Nombre</label>
+                    <label  class="self-center block m-2 text-sm font-medium text-gray-900 dark:text-white">Nombre</label>
                     <input onChange={e => setNombre(e.target.value)} type="text" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
                 </div>
                 <div class="flex flex-col">
-                    <label for="text" class="self-center block m-2 text-sm font-medium text-gray-900 dark:text-white">Apellido</label>
+                    <label class="self-center block m-2 text-sm font-medium text-gray-900 dark:text-white">Apellido</label>
                     <input onChange={e => setApellido(e.target.value)} type="text" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
                 </div>
                 <div class="flex flex-col">
-                    <label for="email" class="self-center block m-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
-                    <input onChange={e => setEmail(e.target.value)} type="email" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="" />
+                    <label class="self-center block m-2 text-sm font-medium text-gray-900 dark:text-white">Nombre de Usuario</label>
+                    <input onChange={e => setUserName(e.target.value)} type="text" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required=""/>
                 </div>
                 <div class="flex flex-col">
+                    <label class="self-center block m-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
+                    <input onChange={e => setEmail(e.target.value)} type="email" name="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
+                </div>
+                <div class="col-span-2 flex flex-col justify-center items-center self-center">
                     <label class="self-center block m-2 text-sm font-medium text-gray-900 dark:text-white">Roles</label>
-                    <select onChange={(e) => setRoleSelect(e.target.value)} class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <select onChange={(e) => setRoleSelect(e.target.value)} class="text-center bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                         {roles.map((val, key) => {
                             key = val.id
                             return (

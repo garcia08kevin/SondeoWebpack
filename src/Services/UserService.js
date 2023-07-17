@@ -31,6 +31,17 @@ export async function loginUser(credentials) {
     .then(data => data.json())
 }
 
+export async function ChangePassword(data) {
+  return fetch(`${process.env.API_URL}/api/Users/ChangePassword`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  })
+    .then(data => data.json())
+}
+
 export async function UserDetailById(id) {
   const response = await fetch(`${process.env.API_URL}/api/Accounts/GetUsersById?id=${id}`, {
     method: 'POST',
@@ -54,8 +65,8 @@ export async function GetAllUserByRole(role) {
   return await response.json();
 }
 
-export const UserActivation = async (email, eleccion) => {
-  const response = await fetch(`${process.env.API_URL}/api/Accounts/ActivarUsuario?email=${email}&eleccion=${eleccion}`, {
+export const UserActivation = async (userName, eleccion) => {
+  const response = await fetch(`${process.env.API_URL}/api/Accounts/ActivarUsuario?username=${userName}&eleccion=${eleccion}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

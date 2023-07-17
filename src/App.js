@@ -26,7 +26,7 @@ function App() {
   const { token, setToken } = useToken();
   const [connection, setConnection] = useState(null);
   const [showModal, setShowModal] = useState(false);
-  
+
 
   useEffect(() => {
     if (getToken() != undefined) {
@@ -97,8 +97,7 @@ function App() {
             <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
           </>
         ) : null}
-        <BrowserRouter>
-          <Routes>
+        <Routes>
             <Route path="/home" element={<Home />} />
             <Route index element={<Home />} />
             <Route path="/controlProjects" element={<ControlProjects />}>
@@ -122,7 +121,6 @@ function App() {
             <Route path="/notificaciones" element={<Notificacion />} />
             <Route path="*" element={<NoEncontrada />} />
           </Routes>
-        </BrowserRouter>
         <ToastContainer />
       </div>
     </div>

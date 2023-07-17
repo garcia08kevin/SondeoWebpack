@@ -78,8 +78,8 @@ function LocalesList() {
                             </thead>
                             <tbody>
                                 {locales.filter((local) =>
-                                    (filtroCanal === '' || filtroCanal === 'Canal' ? true : (local.canal.nombreCanal === filtroCanal)) &&
-                                    (filtroCiudad === '' || filtroCiudad === 'Cuidades' ? true : (local.ciudad.nombreCiudad === filtroCiudad))
+                                    (filtroCanal === '' || filtroCanal === 'Canal' ? true : (local.canal.nombreCanal === filtroCanal)) 
+                                    //&& (filtroCiudad === '' || filtroCiudad === 'Cuidades' ? true : (local.ciudad.nombreCiudad === filtroCiudad))
                                 )
                                     .map((val, key) => {
                                         return (
@@ -91,7 +91,7 @@ function LocalesList() {
                                                     {val.direccion}
                                                 </td>
                                                 <td class="px-6 py-4">
-                                                    {val.ciudad.nombreCiudad}
+                                                    Ciudad
                                                 </td>
                                                 <td class="px-6 py-4">
                                                     {val.canal.nombreCanal}
