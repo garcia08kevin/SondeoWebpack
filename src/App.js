@@ -21,6 +21,7 @@ import EncuestaDetail from './Components/ProjectsManagement/EncuestaDetail';
 import HistoricoMediciones from './Components/ProjectsManagement/HistoricoMediciones';
 import MedicionesActivas from './Components/ProjectsManagement/MedicionesActivas';
 import jwtDecode from 'jwt-decode';
+import ProfilePage from './Components/ProfinePage';
 
 function App() {
   const { token, setToken } = useToken();
@@ -100,6 +101,7 @@ function App() {
         <Routes>
             <Route path="/home" element={<Home />} />
             <Route index element={<Home />} />
+            <Route path="/Perfil" element={<ProfilePage />} />
             <Route path="/controlProjects" element={<ControlProjects />}>
               <Route index element={<MedicionesActivas />} />
               <Route path="/controlProjects/localesList" element={<LocalesList />} />

@@ -6,6 +6,12 @@ export const getToken = () => {
   return userToken?.token
 };
 
+export const getDataUser= () => {
+  const tokenString = localStorage.getItem('currentUser');
+  const userToken = JSON.parse(tokenString);
+  return userToken
+};
+
 export default function useToken() {
 
   const [token, setToken] = useState(getToken());
@@ -113,6 +119,7 @@ export const getUsers = async () => {
   return data;
 }
 
+
 export async function DeleteUser(id) {
   const response = await fetch(`${process.env.API_URL}/api/Accounts/RemoveUser?id=${id}`, {
     method: 'DELETE',
@@ -161,8 +168,20 @@ export const notificacionService = async () => {
   return data;
 }
 
+export const elimnarNotificacion = async (id) => {
+  const response = await fetch(`${process.env.API_URL}/api/Accounts/Notificaciones/${id}`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${getToken()}`
+    }
+  })
+  const data = await response.json();
+  return data;
+}
+
 export const marcarComoLeida = async (id) => {
-  await fetch(`${process.env.API_URL}/api/Notifications/MarcarComoLeido?id=${id}`, {
+  await fetch(`${process.env.API_URL}/api/Accounts/Notificaciones/MarcarComoLeido?id=${id}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom"
-import { getCiudades, getLocales, getCanales } from "../../Services/EncuestaService";
+import { getCiudades, getLocales, getCanales, getLocalesById, habilitarLocal } from "../../Services/EncuestaService";
+import ModeEditIcon from '@mui/icons-material/ModeEdit';
+import { toast } from 'react-toastify';
 
 function LocalesList() {
     const [ciudades, setCiudades] = useState([]);
@@ -10,6 +12,9 @@ function LocalesList() {
     const [filtroCiudad, setFiltroCiudad] = useState('');
     const [apiCalled, setApiCalled] = useState(false);
     const [loading, setLoading] = useState(true);
+    const [selectedLocal, setSelectedLocal] = useState();
+    const [showOptions, setShowOptions] = useState(false);
+    const [activado, setActivado] = useState(false);
 
     useEffect(() => {
         if (!apiCalled) {
@@ -19,7 +24,7 @@ function LocalesList() {
             getCanales().then(response => {
                 setCanales(response);
             });
-            getLocales(0).then(response => {
+            getLocales().then(response => {
                 setLocales(response);
                 setLoading(false);
             });
@@ -27,6 +32,33 @@ function LocalesList() {
         }
     }, [apiCalled]);
 
+    const mostrarOpciones = (id) => {
+        setShowOptions(true)
+        setSelectedLocal(id)
+        getLocalesById(id).then(response => {
+            setActivado(response.habilitado);
+        });
+    }
+
+    function handleToggle() {
+        setActivado(!activado);
+    }
+
+    const activarLocal = () =>{
+        habilitarLocal(selectedLocal, activado).then(response => {
+            if(response.result){
+                getLocales().then(response => {
+                    setLocales(response);
+                    setLoading(true);
+                });
+                toast.success(`${response.respose}`);
+                setShowOptions(false)
+            } else if(!response.result){
+                toast.error(`${response.respose}`);
+            }
+            
+        });
+    } 
 
     return (
         <div>
@@ -72,14 +104,17 @@ function LocalesList() {
                                         </select>
                                     </th>
                                     <th scope="col" class="px-6 py-3">
+                                        Estado
+                                    </th>
+                                    <th scope="col" class="text-center px-6 py-3">
                                         Opciones
                                     </th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {locales.filter((local) =>
-                                    (filtroCanal === '' || filtroCanal === 'Canal' ? true : (local.canal.nombreCanal === filtroCanal)) 
-                                    //&& (filtroCiudad === '' || filtroCiudad === 'Cuidades' ? true : (local.ciudad.nombreCiudad === filtroCiudad))
+                                    (filtroCanal === '' || filtroCanal === 'Canal' ? true : (local.canal === filtroCanal))
+                                    && (filtroCiudad === '' || filtroCiudad === 'Cuidades' ? true : (local.ciudad === filtroCiudad))
                                 )
                                     .map((val, key) => {
                                         return (
@@ -91,21 +126,63 @@ function LocalesList() {
                                                     {val.direccion}
                                                 </td>
                                                 <td class="px-6 py-4">
-                                                    Ciudad
+                                                    {val.ciudad}
                                                 </td>
                                                 <td class="px-6 py-4">
-                                                    {val.canal.nombreCanal}
+                                                    {val.canal}
                                                 </td>
                                                 <td class="px-6 py-4">
+                                                    {val.habilitado == true ? <div class="flex items-center">
+                                                        <div class="h-2.5 w-2.5 rounded-full bg-green-500 mr-2"></div> Activado
+                                                    </div> : <div class="flex items-center">
+                                                        <div class="h-2.5 w-2.5 rounded-full bg-red-500 mr-2"></div> Desactivado
+                                                    </div>}
+                                                </td>
+                                                <td class="flex justify-center items-center px-6 py-4">
                                                     <Link to={`/controlProjects/localDetail/${val.id}`}>
                                                         <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Detalle</button>
                                                     </Link>
+                                                    <button type="button" onClick={() => mostrarOpciones(val.id)} class="py-2.5 px-5 mr-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"><ModeEditIcon /></button>
                                                 </td>
                                             </tr>
                                         )
                                     })}
                             </tbody>
                         </table>
+                        {showOptions ? (
+                            <>
+                                <div
+                                    className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
+                                >
+                                    <div className="relative w-auto my-6 mx-auto max-w-3xl">
+                                        <div class="p-4">
+                                            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                                <button onClick={() => setShowOptions(false)} type="button" class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white" data-modal-hide="popup-modal">
+                                                    <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                                                    <span class="sr-only">Close modal</span>
+                                                </button>
+                                                <div class="flex flex-col justify-center items-center p-5 text-center">
+                                                    <h2 class="text-2xl pb-5 font-bold dark:text-white">Opciones del Local</h2>
+                                                    <label className="relative inline-flex items-center mb-4 cursor-pointer">
+                                                        <input
+                                                            type="checkbox"
+                                                            className="sr-only peer"
+                                                            checked={activado}
+                                                            onChange={handleToggle}
+                                                        />
+                                                        <div className="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                                                        <span className="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">{activado ? "Habilitado" : "Deshabilitado"}</span>
+                                                    </label>
+                                                    <button onClick={() => activarLocal()} type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Aplicar cambios</button>
+                                                    <button onClick={() => setShowOptions(false)} data-modal-hide="popup-modal" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">Cancelar</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+                            </>
+                        ) : null}
                     </div>
                 </div>
             }

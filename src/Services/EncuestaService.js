@@ -6,6 +6,14 @@ export const crearMedicion = async (id) => {
     return response.json();
 }
 
+export const cerrarMedicion = async (id) => {
+    const response = await fetch(`${process.env.API_URL}/api/Mediciones/CerrarMedicion/${id}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' }
+    })
+    return response.json();
+}
+
 export const historico = async (id) => {
     const response = await fetch(`${process.env.API_URL}/api/Mediciones/HistoricoMediciones/${id}`, {
         method: 'GET',
@@ -46,8 +54,8 @@ export const getCanales = async () => {
     return response.json();
 }
 
-export const getLocales = async (id) => {
-    const response = await fetch(`${process.env.API_URL}/api/ManageLocales/Locales?idCiudad=${id}`, {
+export const getLocales = async () => {
+    const response = await fetch(`${process.env.API_URL}/api/ManageLocales/Locales`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' }
     })
@@ -61,6 +69,17 @@ export const getLocalesById = async (id) => {
     })
     return response.json();
 }
+
+export const habilitarLocal = async (id, eleccion) => {
+    const response = await fetch(`${process.env.API_URL}/api/ManageLocales/HabilitarLocal?id=${id}&eleccion=${eleccion}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    const data = await response.json();
+    return data;
+  }
 
 export const getEncuestasFromLocal = async (id) => {
     const response = await fetch(`${process.env.API_URL}/api/Mediciones/EncuestasFromLocal/${id}`, {
