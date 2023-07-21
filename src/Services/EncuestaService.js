@@ -14,6 +14,14 @@ export const cerrarMedicion = async (id) => {
     return response.json();
 }
 
+export const descargarMedicion = async (id) => {
+    const response = await fetch(`${process.env.API_URL}/api/Mediciones/ExportarMedicion/${id}`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' }
+    })
+    return response.json();
+}
+
 export const historico = async (id) => {
     const response = await fetch(`${process.env.API_URL}/api/Mediciones/HistoricoMediciones/${id}`, {
         method: 'GET',

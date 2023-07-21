@@ -11,7 +11,6 @@ import ControlUser from './Components/UserManagement/ControlUser';
 import NoEncontrada from './Components/NoEncontrada';
 import UserList from './Components/UserManagement/UserList';
 import RegisterUser from './Components/UserManagement/RegisterUser';
-import UserDetail from './Components/UserManagement/UserDetail';
 import ControlProduct from './Components/ProductsManagement/ControlProduct';
 import PoductList from './Components/ProductsManagement/ProductList';
 import ControlProjects from './Components/ProjectsManagement/ControlProjects';
@@ -21,7 +20,7 @@ import EncuestaDetail from './Components/ProjectsManagement/EncuestaDetail';
 import HistoricoMediciones from './Components/ProjectsManagement/HistoricoMediciones';
 import MedicionesActivas from './Components/ProjectsManagement/MedicionesActivas';
 import jwtDecode from 'jwt-decode';
-import ProfilePage from './Components/ProfinePage';
+import DownloadContent from './Components/ProjectsManagement/DownloadContent';
 
 function App() {
   const { token, setToken } = useToken();
@@ -101,7 +100,6 @@ function App() {
         <Routes>
             <Route path="/home" element={<Home />} />
             <Route index element={<Home />} />
-            <Route path="/Perfil" element={<ProfilePage />} />
             <Route path="/controlProjects" element={<ControlProjects />}>
               <Route index element={<MedicionesActivas />} />
               <Route path="/controlProjects/localesList" element={<LocalesList />} />
@@ -114,13 +112,13 @@ function App() {
               <Route index element={<UserList />} />
               <Route path="/controlUser/userList" element={<UserList />} />
               <Route path="/controlUser/registerUser" element={<RegisterUser />} />
-              <Route path="/controlUser/userDetail/:id" element={<UserDetail />} />
             </Route>
             <Route path="/controlProduct" element={<ControlProduct />}>
               <Route index element={<PoductList />} />
               <Route path="/controlProduct/productList" element={<PoductList />} />
             </Route>
             <Route path="/notificaciones" element={<Notificacion />} />
+            <Route path="/descargarMedicion/:id" element={<DownloadContent />} />
             <Route path="*" element={<NoEncontrada />} />
           </Routes>
         <ToastContainer />

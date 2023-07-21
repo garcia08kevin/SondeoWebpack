@@ -4,15 +4,16 @@ import mediciones from '../../public/icons/mediciones.png'
 import { getUsers, getDataUser } from '../Services/UserService';
 import React, { useEffect, useState } from 'react';
 
-let dataUser = getDataUser()
 
 function Home() {
   const [usuarios, setUsuarios] = useState([]);
   const [apiCalled, setApiCalled] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [dataUser, setDataUser] = useState([]);
 
   useEffect(() => {
     if (!apiCalled) {
+      setDataUser(getDataUser())
       getUsers().then(response => {
         const limitedData = response.slice(0, 5);
         setUsuarios(limitedData);
