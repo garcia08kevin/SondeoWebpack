@@ -39,6 +39,7 @@
     "react-toastify": "^9.0.3",
     "react-webcam": "^7.1.1",
     "sheetjs-style": "^0.15.8",
+    "sonarqube-scanner": "^3.0.1",
     "stream-http": "^3.2.0",
     "url": "^0.11.0",
     "url-loader": "^4.1.1",
