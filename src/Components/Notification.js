@@ -23,18 +23,23 @@ function Notificacion() {
     }
   }
 
-  function marcaLeida(id) {
+  async function marcaLeida(id) {
     setLoading(true)
     marcarComoLeida(id);
-    window.location.reload()
+    notificacionService().then(response => {
+      setNotificacion(response);      
+    });
+    setLoading(false)
   }
 
-  function eliminar(id) {
+  async function eliminar(id) {
     setLoading(true)
     eliminarNotificacion(id).then(response => {
-      setLoading(false)
-      window.location.reload()
+      notificacionService().then(response => {
+        setNotificacion(response);        
+      });      
     });
+    setLoading(false)
   }
 
   function fechaFomato(fecha) {
