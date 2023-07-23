@@ -72,6 +72,7 @@ export default function Login({ setToken }) {
         } else if(token.user.role === "Encuestador"){
           var mensaje = "Tu rol no esta autorizado para acceder a este sitio";
           setMessage(mensaje);
+          setShowChangePassword(false)
           console.log(token.user.role)
         } else {      
           localStorage.setItem('currentUser', JSON.stringify(token.user))
