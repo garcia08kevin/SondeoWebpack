@@ -25,7 +25,7 @@ function Notificacion() {
 
   async function marcaLeida(id) {
     setLoading(true)
-    marcarComoLeida(id);
+    await marcarComoLeida(id);
     notificacionService().then(response => {
       setNotificacion(response);      
     });
@@ -34,12 +34,12 @@ function Notificacion() {
 
   async function eliminar(id) {
     setLoading(true)
-    eliminarNotificacion(id).then(response => {
+    await eliminarNotificacion(id).then(response => {
       notificacionService().then(response => {
         setNotificacion(response);        
+        setLoading(false)
       });      
-    });
-    setLoading(false)
+    });    
   }
 
   function fechaFomato(fecha) {
