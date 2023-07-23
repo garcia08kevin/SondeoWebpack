@@ -7,7 +7,7 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { toast } from 'react-toastify';
 
 export default function Login({ setToken }) {
-  const [message, setMessage] = useState();
+  const [message, setMessage] = useState("");
   const [messagePassword, setMessagePassword] = useState(null);
   const [userName, setUserName] = useState();
   const [password, setPassword] = useState();
@@ -29,15 +29,18 @@ export default function Login({ setToken }) {
     const token = await loginUser({
       userName,
       password
-    });
-    console.log(token)
-    if (!token.result) {
+    });  
+    if (!token.result) {      
       if (token.respose === "FirstLogin") {
         setShowChangePassword(true)
       }
       var mensaje = token.respose;
       setMessage(mensaje);
-    } else {
+    } else if(token.user.role === "Encuestador"){
+      var mensaje = "Tu rol no esta autorizado para acceder a este sitio";
+      setMessage(mensaje);
+      console.log(token.user.role)
+    } else {      
       localStorage.setItem('currentUser', JSON.stringify(token.user))
       setToken(token);
     }
@@ -60,9 +63,20 @@ export default function Login({ setToken }) {
           userName: userName,
           password: changePassword.newPassword
         });
-        localStorage.setItem('currentUser', JSON.stringify(token.user))
-        setToken(token);
-        toast.success(`${response.respose}`);
+        if (!token.result) {      
+          if (token.respose === "FirstLogin") {
+            setShowChangePassword(true)
+          }
+          var mensaje = token.respose;
+          setMessage(mensaje);
+        } else if(token.user.role === "Encuestador"){
+          var mensaje = "Tu rol no esta autorizado para acceder a este sitio";
+          setMessage(mensaje);
+          console.log(token.user.role)
+        } else {      
+          localStorage.setItem('currentUser', JSON.stringify(token.user))
+          setToken(token);
+        }
       } else {
         setMessagePassword(response.respose);
         setLoading(false);
