@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { notificacionService, marcarComoLeida, elimnarNotificacion } from "../Services/UserService";
+import { notificacionService, marcarComoLeida, eliminarNotificacion } from "../Services/UserService";
 import TaskAltIcon from '@mui/icons-material/TaskAlt';
 import DeleteIcon from '@mui/icons-material/Delete';
 
@@ -26,16 +26,14 @@ function Notificacion() {
   function marcaLeida(id) {
     setLoading(true)
     marcarComoLeida(id);
-    notificacionService().then(response => {
-      setNotificacion(response);
-      setLoading(false)
-    });
+    window.location.reload()
   }
 
   function eliminar(id) {
     setLoading(true)
-    elimnarNotificacion(id).then(response => {
+    eliminarNotificacion(id).then(response => {
       setLoading(false)
+      window.location.reload()
     });
   }
 

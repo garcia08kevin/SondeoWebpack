@@ -168,7 +168,7 @@ export const notificacionService = async () => {
   return data;
 }
 
-export const elimnarNotificacion = async (id) => {
+export const eliminarNotificacion = async (id) => {
   const response = await fetch(`${process.env.API_URL}/api/Accounts/Notificaciones/${id}`, {
     method: 'DELETE',
     headers: {
